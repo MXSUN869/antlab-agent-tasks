@@ -154,9 +154,15 @@ python 基础/starter/trace_one_request.py --port 8791
 
 # 7) 提交安全自查（预演，不写入）
 python tools/redact_endpoint.py
+
+# 8) 核对「已有记录」的判分合并是否错位（逐行回到 runs/<run_id>.json 重新解析），并生成速览
+python tools/audit_existing_reviews.py
+
+# 9) 生成 R1/R2 复核速览（改过判分后重跑，使速览与 manual_review.csv 一致）
+python tools/make_review_sheet.py
 ```
 
-第 1–6 条命令都不调用模型，第 3–5 条无第三方依赖。
+以上 9 条命令都不调用模型；第 3–5、8、9 条无第三方依赖。
 
 ---
 
