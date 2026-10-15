@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Challenge B · 系统失效诊断</title>
+<style>
+body{max-width:1100px;margin:28px auto;padding:0 18px;font:15px/1.6 system-ui;color:#20252b}
+h1{margin-bottom:4px} .muted{color:#5e6873}
+.controls,.grid{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+button,select{padding:9px 12px;border:1px solid #aeb8c2;border-radius:6px;background:white}
+button{cursor:pointer}
+.card{border:1px solid #d5dbe1;border-radius:9px;padding:14px;margin:12px 0;min-width:0}
+.grid>.card{flex:1 1 240px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:12px;border-radius:6px}
+table{border-collapse:collapse;width:100%}td,th{padding:8px;border-bottom:1px solid #d5dbe1;text-align:left;vertical-align:top}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;background:#edf0f3}
+.error{color:#9b2525}.evidence{border-left:3px solid #7b8a99;padding-left:10px;margin:10px 0}
+</style>
+</head>
+<body>
+<h1>系统失效诊断</h1>
+<p class="muted">离线重放样机 · 不调用模型 API。语义支持未实现时明确显示 not_checked。</p>
+
+<div class="controls">
+<label>案例 <select id="cases"></select></label>
+<label><input type="checkbox" id="reset"> 运行前清空缓存</label>
+<button id="run">运行案例</button>
+</div>
+<p id="message" class="muted">正在加载案例…</p>
+
+<section class="grid">
+<div class="card"><h3>当前请求</h3><div id="request">尚未运行</div></div>
+<div class="card"><h3>执行状态</h3><div id="status">尚未运行</div></div>
+</section>
+
+<section class="card">
+<h2>实际检索证据</h2>
+<div id="evidence">运行案例后显示</div>
+</section>
+
+<section class="card">
+<h2>验证结果</h2>
+<table>
+<thead><tr><th>字段</th><th>含义</th><th>实际值</th></tr></thead>
+<tbody id="validation"></tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>完整原始结果</h2>
+<pre id="raw">运行案例后显示</pre>
+</section>
+
+
+<section class="panel" style="margin-top:24px">
+  <h2>修复前后行为对比</h2>
+  <p>读取 <code>runs/baseline.json</code>（原始样机）与 <code>runs/repaired.json</code>（修复版），
+  按同一用例逐条列出检索证据、引用定位状态、语义支持状态、总体状态与缓存命中。
+  两个文件使用相同输入与相同重放顺序，因此可直接比较。</p>
+  <button id="refresh-comparison" type="button">重新读取对比</button>
+  <p id="comparison-message">尚未读取对比数据。</p>
+  <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>用例</th>
+          <th>修复前证据</th>
+          <th>修复后证据</th>
+          <th>修复前定位 → 修复后</th>
+          <th>修复前语义支持 → 修复后</th>
+          <th>修复前状态 → 修复后</th>
+          <th>修复前缓存命中 → 修复后</th>
+        </tr>
+      </thead>
+      <tbody id="comparison-body">
+        <tr><td colspan="7">点击「重新读取对比」加载。</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+const $ = id => document.getElementById(id);
+let casesData = [];
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+async function loadCases() {
+  const response = await fetch("/api/cases");
+  if (!response.ok) throw new Error("加载案例失败：" + response.status);
+  const data = await response.json();
+  casesData = data.cases;
+  $("cases").replaceChildren();
+  for (const c of casesData) {
+    const option = document.createElement("option");
+    option.value = c.id;
+    option.textContent = `${c.id} · ${c.request.doc_ids.join(",")} / ${c.request.snapshot} · ${c.request.query}`;
+    $("cases").append(option);
+  }
+  $("message").textContent = `已加载 ${casesData.length} 个离线案例。`;
+}
+
+function showResult(result) {
+  const req = result.request || {};
+  $("request").innerHTML = `
+    <p><b>Request ID：</b>${esc(result.request_id)}</p>
+    <p><b>查询：</b>${esc(req.query)}</p>
+    <p><b>文档范围：</b>${esc((req.doc_ids || []).join(", "))}</p>
+    <p><b>请求快照：</b>${esc(req.snapshot)}</p>
+    <p><b>Top-K：</b>${esc(req.k)}</p>`;
+
+  $("status").innerHTML = `
+    <p><b>总体状态：</b><span class="tag">${esc(result.status)}</span></p>
+    <p><b>缓存命中：</b>${esc(result.cache_hit)}</p>
+    <p><b>运行类型：</b>${esc(result.run_kind)}</p>
+    <p><b>本地耗时：</b>${Number(result.elapsed_ms || 0).toFixed(3)} ms</p>
+    <p><b>回答：</b>${esc(result.answer)}</p>`;
+
+  const evidence = result.evidence || [];
+  $("evidence").innerHTML = evidence.length ? evidence.map(b => `
+    <div class="evidence">
+      <p><b>证据 ID：</b>${esc(b.id)}</p>
+      <p><b>来源文档：</b>${esc(b.doc_id)} · <b>来源快照：</b>${esc(b.snapshot)}</p>
+      <p><b>标签：</b>${esc((b.tags || []).join(", "))}</p>
+      <p>${esc(b.text)}</p>
+    </div>`).join("") : "<p>没有检索到符合当前范围的证据。</p>";
+
+  const rows = [
+    ["引用 ID", "draft 声明引用的来源", JSON.stringify(result.citations)],
+    ["引用定位", "引用是否属于本次实际证据", result.locator_status],
+    ["语义支持", "答案是否得到证据语义支持", result.support_status],
+    ["判断来源", "支持判断的实际来源", result.judgment_source],
+    ["总体状态", "请求处理结果或范围错误", result.status]
+  ];
+  $("validation").innerHTML = rows.map(r =>
+    `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`
+  ).join("");
+
+  $("raw").textContent = JSON.stringify(result, null, 2);
+}
+
+$("run").addEventListener("click", async () => {
+  $("message").textContent = "正在执行离线重放…";
+  try {
+    const response = await fetch("/api/run", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        case_id: $("cases").value,
+        reset: $("reset").checked
+      })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "请求失败");
+    showResult(result);
+    $("message").textContent = "运行完成。请结合原始日志核对结果。";
+  } catch (e) {
+    $("message").textContent = e.message;
+    $("message").className = "error";
+  }
+});
+
+
+function displayValue(value) {
+  if (value === null || value === undefined || value === "") return "—";
+  if (Array.isArray(value)) return value.length ? value.join(", ") : "（空）";
+  return String(value);
+}
+
+async function loadComparison() {
+  const message = document.getElementById("comparison-message");
+  const body = document.getElementById("comparison-body");
+  message.textContent = "正在读取 baseline.json 与 repaired.json…";
+
+  try {
+    const response = await fetch("/api/comparison", {cache: "no-store"});
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.detail || data.error || "对比数据不可用");
+    }
+
+    body.replaceChildren();
+
+    for (const row of (data.rows || [])) {
+      const before = row.baseline || {};
+      const after = row.repaired || {};
+      const values = [
+        row.case_id,
+        displayValue(before.evidence_ids),
+        displayValue(after.evidence_ids),
+        `${displayValue(before.locator_status)} → ${displayValue(after.locator_status)}`,
+        `${displayValue(before.support_status)} → ${displayValue(after.support_status)}`,
+        `${displayValue(before.status)} → ${displayValue(after.status)}`,
+        `${displayValue(before.cache_hit)} → ${displayValue(after.cache_hit)}`
+      ];
+
+      const tr = document.createElement("tr");
+      for (const value of values) {
+        const td = document.createElement("td");
+        td.textContent = value;
+        tr.appendChild(td);
+      }
+      body.appendChild(tr);
+    }
+
+    if (!data.rows || data.rows.length === 0) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 7;
+      td.textContent = "两个结果文件都没有可用记录。";
+      tr.appendChild(td);
+      body.appendChild(tr);
+    }
+
+    message.textContent =
+      `共 ${data.case_count} 个用例；来源文件：${(data.source_files || []).join("、")}`;
+  } catch (error) {
+    message.textContent = "加载对比数据失败：" + error.message;
+    body.replaceChildren();
+  }
+}
+
+document.getElementById("refresh-comparison")
+  .addEventListener("click", loadComparison);
+
+
+loadCases().catch(e => {
+  $("message").textContent = e.message;
+  $("message").className = "error";
+});
+
+loadComparison();
+</script>
+</body>
+</html>
