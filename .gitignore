@@ -1,0 +1,23 @@
+# 本地配置与凭据：一律不提交
+config.local.json
+*.local.json
+.env
+.env.*
+
+# Python 缓存与虚拟环境
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# 工作区临时目录（DSH 运行时的沙箱临时区，与作品无关）
+.dsh_py/
+.pylibs/
+.tmp/
+.tmp2/
+.local_backup_runs/
+
+# 本地草稿
+*.bak
+*.orig
