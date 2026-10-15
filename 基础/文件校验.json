@@ -1,0 +1,23 @@
+{
+  ".gitignore": "be3c425ce8255d75eb272020c7526ea7559d1845ac8f7c93ed62b017156c2229",
+  "01_考核题目.md": "bbbb5e648e6440c591aee42bf1de32d9e98c92acac0280b959a49bcf57019305",
+  "02_阅读材料.md": "25ad2e77d47ac3b01cd54214c6f96e6ba7b57de817d77d31d301bd16eca346ca",
+  "03_提交要求.md": "53e6a36e1d156229cef9ba308c151db1f7bfe34153a5d71f85c433a3e9c40731",
+  "config.example.json": "bebf8f7cdaad2dfe2b40d859770126f57037d11c0e2733da036c61a971d01019",
+  "data/cases.json": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "data/dev_answers.json": "96c5a6dc7063011632fc3e6b2ae5f16c111a714b862afdfb337ab0b95bd80e72",
+  "data/manifest.json": "5ca24620a158ebb3429b6255b3e91f9fc26b749f12e41603245585ed32df8fb8",
+  "data/使用与标注说明.md": "3e15a9ab3c32beb94158dc12dafd934d411239ef5ccf29eef7007f6b4315c34d",
+  "README.md": "af3e21660e0b1f6aef4adb7d828efadcc63f1ed2f068d7752b72442b0db2d4ff",
+  "starter/export_runs.py": "917a75073b65abe55e022a7d6fe6b3c3917aad0990cbb7e001d3eb6b8af6f27e",
+  "starter/index.html": "d63fbde03a831545b2e79601262359ef011b0b9808bde468d94e74eb60ca8b2e",
+  "starter/lexical.py": "05d7b162d14061d8c667279a36c483e089b79e5c4c398cc105e9660e0c1ee775",
+  "starter/provider.py": "b573f2359ad7e7a2818f9c8ba07952d4d7bfb2854a6d7e14b509da27dcf9c761",
+  "starter/runner.py": "ad926a5b875804eff67c6920d07a9df922cd1afdbcdb5287dd24622eef4e30db",
+  "starter/server.py": "fd2174af5fe875ff37b24dba92f298b5602bfdef3859b4b584c2280fa14911d8",
+  "starter/student.py": "f38f77aef7306f1abad868bde87170225ce5ec8b00f22f9f5a92ca78544de9b6",
+  "templates/决策记录模板.md": "33ac56bb050b3641e93e98aae175b4d487f979ebf227afff4623cfca07ab043a",
+  "templates/声明模板.md": "eba4ab6bef0cad7d142c061d6140e2f86f3ac9fbf985367d1119800fb90a6cce",
+  "templates/报告模板.md": "70207d4baad60ba3b7b02e7bc097aeae1af15e5563cfc3ff9ca6bf1f0b56b305",
+  "templates/提交索引.md": "007a5c9f3e18d9d91dbc7fd9ae22c34c1b11d57f4711e97d5bdebceeadcc08a8"
+}

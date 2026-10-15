@@ -1,0 +1,9 @@
+﻿case_id,baseline_run_id,improved_run_id,baseline_answer,improved_answer,baseline_correct,improved_correct,baseline_support,improved_support,baseline_seconds,improved_seconds,delta_seconds
+T01,03473df0-22fd-43ee-b323-baca46edbe47,e7ed6cce-72cb-4bf2-b4c4-fec97714e84b,,S24,否,是,不适用,是,7.04,6.04,-1.00
+T02,cba12f60-82a1-4a74-90d1-fc743d1a5cc3,a31834d7-4322-4062-84f6-c34b52a07db1,76%,76%,是,是,是,是,3.92,3.83,-0.09
+T03,3a77ba4d-8e49-4fbe-ac9f-9abc5a3dd667,12ba9ab1-b742-4d34-b63c-a3385db61819,2.6,2.6,是,是,是,是,3.51,3.35,-0.16
+T04,93c7332b-2671-43b3-b7a6-b5c38cd1d7cc,a92a226f-5d85-4a07-b031-3006e4138e2a,流程乙,流程乙,是,是,是,是,2.85,3.07,+0.21
+T05,18c52a9a-6ccd-476e-aaa9-142a16787dfc,a673b25e-5fa6-4849-8bae-88b0f8f5ae2a,证据不足,证据不足,是,是,是,是,4.33,3.46,-0.87
+T06,01111189-bddf-40a8-bade-e9ca150c468c,4a3f8993-72f3-4f55-bfc4-ee17e75f5885,25%,25%,是,是,是,是,8.14,2.81,-5.34
+T07,709b57b1-0174-404d-bb0e-a071c74fee3a,d8d7dd22-50ff-483e-9d45-eaffce931ae1,丙,丙,是,是,是,是,3.42,3.04,-0.38
+T08,5c12b3af-8c13-432a-b1f3-6816aacf61ee,6b8b604b-5c35-4eaf-9dc7-e508863589d8,K17,,是,否,是,不适用,5.55,5.83,+0.28
