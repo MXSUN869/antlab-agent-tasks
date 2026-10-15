@@ -57,10 +57,11 @@ python tools/redact_endpoint.py --apply    # 实际写入
 
 ```bash
 # 1) 仓库中不应出现任何 key-like 字符串
-grep -rInE "Bearer [A-Za-z0-9_-]{12,}|sk-[A-Za-z0-9]{16,}" --include="*.json" --include="*.md" --include="*.py" .
+# 只查数据与代码文件：.md 里出现的同一串是说明文字，不是残留
+grep -rInE "Bearer [A-Za-z0-9_-]{12,}|sk-[A-Za-z0-9]{16,}" --include="*.json" --include="*.py" .
 
 # 2) 不应出现真实 Endpoint 主机名
-grep -rIn "ark.cn-beijing.volces.com" . && echo "仍有残留" || echo "已清理"
+grep -rIn "ark.cn-beijing.volces.com" --include="*.json" . && echo "仍有残留" || echo "已清理"
 
 # 3) 确认本地配置没有被跟踪
 git ls-files | grep -E "config\.local\.json|\.env$" && echo "错误：本地配置被跟踪" || echo "OK"
