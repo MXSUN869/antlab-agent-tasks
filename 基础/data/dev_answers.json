@@ -1,0 +1,59 @@
+[
+  {
+    "id": "D01",
+    "answer": "80%",
+    "aliases": [
+      "80%",
+      "80%"
+    ],
+    "evidence_ids": [
+      "P312446",
+      "P898100"
+    ],
+    "reason": "68/85=80%。",
+    "split": "dev",
+    "task_kind": "percent"
+  },
+  {
+    "id": "D02",
+    "answer": "证据不足",
+    "aliases": [
+      "证据不足",
+      "证据不足"
+    ],
+    "evidence_ids": [],
+    "reason": "所给范围没有具体GPU型号；区域或耗时不足以推定。",
+    "split": "dev",
+    "task_kind": "insufficient"
+  },
+  {
+    "id": "D03",
+    "answer": "1.8",
+    "aliases": [
+      "1.8",
+      "1.8"
+    ],
+    "evidence_ids": [
+      "P695887",
+      "P419087"
+    ],
+    "reason": "7.6-5.8=1.8秒。",
+    "split": "dev",
+    "task_kind": "difference"
+  },
+  {
+    "id": "D04",
+    "answer": "配置丙",
+    "aliases": [
+      "配置丙",
+      "配置丙"
+    ],
+    "evidence_ids": [
+      "P579223",
+      "P611709"
+    ],
+    "reason": "乙与丙合格，丙预算更低。",
+    "split": "dev",
+    "task_kind": "choice"
+  }
+]

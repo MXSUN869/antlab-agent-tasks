@@ -1,0 +1,60 @@
+# 为什么需要这个文件
+#
+# 本机与多数 Windows 安装的 Git 默认 core.autocrlf=true，会在入库时把 CRLF 归一为 LF、
+# 在检出时又把 LF 转成 CRLF。题包自带 基础/文件校验.json 与 进阶/文件校验.json，
+# 其中 SHA256 是按原始字节计算的；一旦发生换行符转换，这些校验值在 clone 之后就无法复现。
+#
+# 因此这里把「仍与题包校验值一致」的文件锁定为不转换（-text），
+# 使它们在任意平台检出后字节不变、SHA256 可复算。
+#
+# 被本人修改过的文件（student.py / .gitignore / index.html / challenge.py / server.py）
+# 以及本次新增的文件不在此列，保持文本处理，以便评审能直接阅读 diff。
+#
+# 由 tools 生成；改动题包文件后请同步更新。
+
+基础/01_考核题目.md -text
+基础/02_阅读材料.md -text
+基础/03_提交要求.md -text
+基础/README.md -text
+基础/config.example.json -text
+基础/data/cases.json -text
+基础/data/dev_answers.json -text
+基础/data/manifest.json -text
+基础/data/使用与标注说明.md -text
+基础/starter/export_runs.py -text
+基础/starter/index.html -text
+基础/starter/lexical.py -text
+基础/starter/provider.py -text
+基础/starter/runner.py -text
+基础/starter/server.py -text
+基础/templates/决策记录模板.md -text
+基础/templates/声明模板.md -text
+基础/templates/报告模板.md -text
+基础/templates/提交索引.md -text
+进阶/00_共同规则与接口.md -text
+进阶/01_A_研究机制迁移.md -text
+进阶/02_B_系统失效诊断.md -text
+进阶/03_C_产品假设验证.md -text
+进阶/04_阅读材料与项目背景.md -text
+进阶/05_提交与报告格式.md -text
+进阶/06_收集表填写说明.md -text
+进阶/README.md -text
+进阶/challenge_b/data.json -text
+进阶/challenge_b/run_cases.py -text
+进阶/challenge_b/spec.md -text
+进阶/materials/P2_page2_preview.png -text
+进阶/materials/a_dev_answers.json -text
+进阶/materials/a_tasks.json -text
+进阶/materials/figures.json -text
+进阶/materials/page_words.json -text
+进阶/materials/papers/P1.pdf -text
+进阶/materials/papers/P1.xml -text
+进阶/materials/papers/P1_extracted.txt -text
+进阶/materials/papers/P2.pdf -text
+进阶/materials/papers/P2.xml -text
+进阶/materials/papers/P2_extracted.txt -text
+进阶/materials/sections.json -text
+进阶/materials/sources.json -text
+进阶/materials/数据说明.md -text
+进阶/templates/决策与声明.md -text
+进阶/templates/整合报告.md -text

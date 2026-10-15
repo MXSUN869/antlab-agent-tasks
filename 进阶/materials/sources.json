@@ -1,0 +1,39 @@
+[
+  {
+    "id": "P1",
+    "title": "Ten Simple Rules for Reproducible Computational Research",
+    "authors": "Sandve, Nekrutenko, Taylor, Hovig",
+    "year": 2013,
+    "doi": "10.1371/journal.pcbi.1003285",
+    "source": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285",
+    "license_text": "This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+    "license_attributes": [
+      {
+        "{http://www.w3.org/1999/xlink}type": "simple"
+      }
+    ],
+    "pdf_sha256": "35648a3880bdd8bf30e8212a3847b7bd35f504ee5ccbd1ad3856d206acd181db",
+    "xml_sha256": "ceebcff22f523baedcd50c42e3d603e590db4b345dd99c5a178839c866b43d66",
+    "pages": 4,
+    "transform": "原始PDF/XML不修改；文字/词坐标为pdfplumber自动提取，章节为JATS XML提取，未翻译。"
+  },
+  {
+    "id": "P2",
+    "title": "Ten simple rules for writing and sharing computational analyses in Jupyter Notebooks",
+    "authors": "Rule et al.",
+    "year": 2019,
+    "doi": "10.1371/journal.pcbi.1007007",
+    "source": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007007",
+    "license_text": "\n This is an open access article distributed under the terms of the  Creative Commons Attribution License , which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited. \n",
+    "license_attributes": [
+      {
+        "{http://www.w3.org/1999/xlink}href": "http://creativecommons.org/licenses/by/4.0/",
+        "{http://www.w3.org/1999/xlink}type": "simple"
+      }
+    ],
+    "pdf_sha256": "30af1629e0fe31b51a82c8f01c901a0ecc6d13bb61bc601861aeb3d260397910",
+    "xml_sha256": "17b127c58c8741a59dc8172b61a58d5f7b15ab815b192d273c62bab82d2fcb9e",
+    "pages": 8,
+    "transform": "原始PDF/XML不修改；文字/词坐标为pdfplumber自动提取，章节为JATS XML提取，未翻译。"
+  }
+]

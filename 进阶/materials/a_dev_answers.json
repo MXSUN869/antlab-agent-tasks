@@ -1,0 +1,38 @@
+[
+  {
+    "id": "AD01",
+    "label": "contradicted",
+    "evidence_sections": [
+      "P1-S03"
+    ],
+    "required_reasoning": [
+      "原文要求记录修改或移动了哪些文件及为什么",
+      "反对无需记录，不说一切人工操作都禁止"
+    ],
+    "note": "允许语义等价解释和有充分原文依据的替代；人工复核，不以关键词命中直接判满分。"
+  },
+  {
+    "id": "AD02",
+    "label": "supported",
+    "evidence_sections": [
+      "P2-S10"
+    ],
+    "required_reasoning": [
+      "区分read与run",
+      "静态导出不携带可执行环境保证"
+    ],
+    "note": "允许语义等价解释和有充分原文依据的替代；人工复核，不以关键词命中直接判满分。"
+  },
+  {
+    "id": "AD03",
+    "label": "contradicted",
+    "evidence_sections": [
+      "P1-S08"
+    ],
+    "required_reasoning": [
+      "须保留底层数据及必要的绘图变换信息",
+      "最终图像不够"
+    ],
+    "note": "允许语义等价解释和有充分原文依据的替代；人工复核，不以关键词命中直接判满分。"
+  }
+]

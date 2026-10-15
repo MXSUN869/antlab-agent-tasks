@@ -1,0 +1,10 @@
+{
+  "provider": "填写服务商",
+  "endpoint": "https://YOUR_PROVIDER/v1/chat/completions",
+  "model": "填写实际模型标识",
+  "parameters": {
+    "temperature": 0,
+    "max_tokens": 256
+  },
+  "timeout_seconds": 90
+}

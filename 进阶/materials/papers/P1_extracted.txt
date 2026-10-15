@@ -1,0 +1,263 @@
+--- PDF PAGE 1 ---
+Editorial
+Ten Simple Rules for Reproducible Computational
+Research
+Geir Kjetil Sandve1,2*, Anton Nekrutenko3, James Taylor4, Eivind Hovig1,5,6
+1DepartmentofInformatics,UniversityofOslo,Blindern,Oslo,Norway,2CentreforCancerBiomedicine,UniversityofOslo,Blindern,Oslo,Norway,3Departmentof
+Biochemistry and Molecular Biology and The Huck Institutes for the Life Sciences, Penn State University, University Park, Pennsylvania, United States of America,
+4DepartmentofBiologyandDepartmentofMathematicsandComputerScience,EmoryUniversity,Atlanta,Georgia,UnitedStatesofAmerica,5DepartmentofTumor
+Biology,InstituteforCancerResearch,TheNorwegianRadiumHospital,OsloUniversityHospital,Montebello,Oslo,Norway,6InstituteforMedicalInformatics,The
+NorwegianRadiumHospital,OsloUniversityHospital,Montebello,Oslo,Norway
+Replication is the cornerstone of a We further note that reproducibility is thantodoitwhileunderway).Webelieve
+cumulative science [1]. However, new just as much about the habits that ensure that the rewards of reproducibility will
+tools and technologies, massive amounts reproducible research as the technologies compensate for the risk of having spent
+of data, interdisciplinary approaches, and thatcanmaketheseprocessesefficientand valuable time developing an annotated
+the complexity of the questions being realistic. Each of the following ten rules catalogofanalysesthatturnedoutasblind
+asked are complicating replication efforts, captures a specific aspect of reproducibil- alleys.
+as are increased pressures on scientists to ity, and discusses what is needed in terms As a minimal requirement, you should
+advancetheirresearch[2].Asfullreplica- of information handling and tracking of at least be able to reproduce the results
+tion of studies on independently collected procedures.Ifyouaretakingabare-bones yourself.Thiswouldsatisfythemostbasic
+dataisoftennotfeasible,therehasrecently approach to bioinformatics analysis, i.e., requirements of sound research, allowing
+beenacallforreproducibleresearchasan running various custom scripts from the any substantial future questioning of the
+attainableminimumstandardforassessing command line, you will probably need to research to be met with a precise expla-
+the value of scientific claims [3]. This handle each rule explicitly. If you are nation.Althoughitmaysoundlikeavery
+requires that papers in experimental instead performing your analyses through weak requirement, even this level of
+science describe the results and provide a an integrated framework (such as Gene- reproducibilitywilloftenrequireacertain
+sufficientlyclearprotocoltoallowsuccess- Pattern [10], Galaxy [11],LONI pipeline levelofcareinordertobemet.Therewill
+ful repetition and extension of analyses [12], or Taverna [13]), the system may for a given analysis be an exponential
+based on originaldata [4]. already provide full or partial support for number of possible combinations of soft-
+The importance of replication and mostoftherules.Whatisneededonyour ware versions, parameter values, pre-
+reproducibilityhasrecentlybeenexempli- part isthenmerely theknowledge of how processing steps, and so on, meaning that
+fiedthroughstudiesshowingthatscientific toexploitthese existing possibilities. a failure to take notes may make exact
+papers commonly leave out experimental Inapragmaticsetting,withpublication reproduction essentially impossible.
+details essential for reproduction [5], pressure and deadlines, one may face the Withthisbasiclevelofreproducibilityin
+studiesshowingdifficultieswithreplicating need to make a trade-off between the place, there is much more that can be
+published experimental results [6], an ideals of reproducibility and the need to wished for. An obvious extension is to go
+increase in retracted papers [7], and gettheresearchoutwhileitisstillrelevant. from a level where you can reproduce
+through a high number of failing clinical This trade-off becomes more important results in case of a critical situation to a
+trials [8,9]. This has led to discussions on when considering that a large part of the level where you can practically and
+how individual researchers, institutions, analyses being tried out never end up routinely reuse your previous work and
+funding bodies,andjournalscanestablish yielding any results. However, frequently increase your productivity. A second
+routines that increase transparency and one will, with the wisdom of hindsight, extension is to ensure that peers have a
+reproducibility. In order to foster such contemplate the missed opportunity to practical possibility of reproducing your
+aspects, it has been suggested that the ensure reproducibility, as it may already results, which can lead to increased trust
+scientific community needs to develop a betoolatetotakethenecessarynotesfrom in,interestfor,andcitationsofyourwork
+‘‘culture of reproducibility’’ for computa- memory (or at least much more difficult [6,14].
+tional science, and to require it for
+published claims[3].
+Citation:SandveGK,NekrutenkoA,TaylorJ,HovigE(2013)TenSimpleRulesforReproducibleComputational
+We want to emphasize that reproduc-
+Research.PLoSComputBiol9(10):e1003285.doi:10.1371/journal.pcbi.1003285
+ibility is not only a moral responsibility
+Editor:PhilipE.Bourne,UniversityofCaliforniaSanDiego,UnitedStatesofAmerica
+withrespecttothescientificfield,butthat
+a lack of reproducibility can also be a PublishedOctober24,2013
+burden for you as an individual research- Copyright: (cid:2) 2013Sandveetal.Thisisanopen-accessarticledistributedunderthetermsoftheCreative
+er. As an example, a good practice of CommonsAttributionLicense,whichpermitsunrestricteduse,distribution,andreproductioninanymedium,
+providedtheoriginalauthorandsourcearecredited.
+reproducibility is necessary in order to
+Funding: The authors’ laboratories are supported by US National Institutes of Health grants HG005133,
+allow previously developed methodology
+HG004909, and HG006620 and US National Science Foundation grant DBI 0850103. Additional funding is
+tobeeffectivelyappliedonnewdata,orto provided,inpart,bytheHuckInstitutesfortheLifeSciencesatPennState,theInstituteforCyberscienceat
+allow reuse of code and results for new PennState,andagrantwiththePennsylvaniaDepartmentofHealthusingTobaccoSettlementFunds.The
+projects. In other words, good habits of fundershadnoroleinthepreparationofthemanuscript.
+reproducibilitymayactuallyturnouttobe CompetingInterests:Theauthorshavedeclaredthatnocompetinginterestsexist.
+a time-saver inthelonger run. *E-mail:geirksa@ifi.uio.no
+PLOSComputationalBiology | www.ploscompbiol.org 1 October2013 | Volume 9 | Issue 10 | e1003285
+
+--- PDF PAGE 2 ---
+We here present ten simple rules for files can usually be replaced by the use of hopeless task. This can cast doubt on
+reproducibility ofcomputational research. standard UNIX commands or small previousresults,asitmaybeimpossibleto
+These rules can be at your disposal for custom scripts. If working with integrated knowiftheywerepartlytheresultofabug
+wheneveryouwanttomakeyourresearch frameworks,therewilltypicallybeaquite or otherwiseunfortunate behavior.
+more accessible—be it for peers or for rich collection of components for data Thestandardsolutiontotrackevolution
+your future self. manipulation. As an example, manual of code is to use a version control system
+tweaking of data files to attain format [15], such as Subversion, Git, or Mercu-
+Rule 1: For Every Result, Keep compatibility should be replaced by for- rial.Thesesystemsarerelativelyeasytoset
+Track of How It Was Produced mat convertersthat canbe reenacted and up and use, and may be used to system-
+includedintoexecutableworkflows.Other aticallystorethestateofthecodethrough-
+Whenever a result may be of potential manualoperationsliketheuseofcopyand out development at any desired time
+interest, keep track of how it was pro- paste between documents should also be granularity.
+duced.Whendoingthis,onewillfrequent- avoided. If manual operations cannot be As a minimum, you should archive
+ly find that getting from raw data to the avoided, you should as a minimum note copies of your scripts from time to time,
+final result involves many interrelated down which data files were modified or so that you keep a rough record of the
+steps(singlecommands,scripts,programs). moved,andforwhatpurpose. various states the code has taken during
+We refer to such a sequence of steps, development.
+whether it is automated or performed Rule 3: Archive the Exact
+manually, as an analysis workflow. While Versions of All External Rule 5: Record All Intermediate
+the essential part of an analysis is often Programs Used Results, When Possible in
+represented by only one of the steps, the
+Standardized Formats
+full sequence of pre- and post-processing In order to exactly reproduce a given
+stepsareoftencriticalinordertoreachthe result,itmaybenecessarytouseprograms In principle, as long as the full process
+achieved result. For every involved step, intheexactversionsusedoriginally.Also, used to produce a given result is tracked,
+you should ensure that every detail that as both input and output formats may all intermediate data can also be regener-
+may influence the execution of the step is change betweenversions, a newer version ated. In practice, having easily accessible
+recorded. If the step is performed by a of a program may not even run without intermediateresultsmaybeofgreatvalue.
+computer program, the critical details modifying its inputs. Even having noted Quickly browsing through intermediate
+include the name and version of the which version was used of a given results can reveal discrepancies toward
+program, as well as the exact parameters program, it is not always trivial to get what is assumed, and can in this way
+and inputsthat were used. hold of a program in anything but the uncoverbugsorfaultyinterpretationsthat
+Although manually noting the precise current version. Archiving the exact ver- are not apparent in the final results.
+sequence of steps taken allows for an sions of programs actually used may thus Secondly, it more directly reveals conse-
+analysis to be reproduced, the documen- savealotofhassleatlaterstages.Insome quences of alternative programs and
+tation can easily getoutof sync withhow cases,allthatisneededistostoreasingle parameter choices at individual steps.
+the analysis was really performed in its executable or source code file. In other Thirdly, when the full process is not
+finalversion.Byinsteadspecifyingthefull cases, a given program may again have readily executable, it allows parts of the
+analysisworkflowinaformthatallowsfor specific requirements to other installed process to be rerun. Fourthly, when
+direct execution, one can ensure that the programs/packages, or dependencies to reproducing results, it allows any experi-
+specificationmatchestheanalysisthatwas specific operating system components. To enced inconsistencies to be tracked to the
+(subsequently) performed, and that the ensure future availability, the only viable steps where the problems arise. Fifth, it
+analysis can be reproduced by yourself or solutionmaythenbetostoreafullvirtual allows critical examination of the full
+othersinanautomatedway.Suchexecut- machine image of the operating system process behind a result, without the need
+able descriptions [10] might come in the and program. As a minimum, you should tohaveallexecutablesoperational.When
+form of simple shell scripts or makefiles note the exact names and versions of the possible,storesuchintermediateresultsin
+[15,16] at the command line, or in the mainprograms you use. standardized formats. As a minimum,
+form of stored workflows in a workflow archive any intermediate result files that
+management system[10,11,13,17,18]. Rule 4: Version Control All areproducedwhenrunningananalysis(as
+As a minimum, you should at least Custom Scripts long as the required storage space is not
+record sufficient details on programs, prohibitive).
+parameters, and manual procedures to Eventheslightestchangetoacomputer
+allow yourself, in a year or so, to program can have large intended or Rule 6: For Analyses That
+approximately reproduce theresults. unintendedconsequences.Whenacontin- Include Randomness, Note
+ually developed piece of code (typically a
+Underlying Random Seeds
+Rule 2: Avoid Manual Data small script) has been used to generate a
+Manipulation Steps certain result, only that exact state of the Many analyses and predictions include
+script may be able to produce that exact someelementofrandomness,meaningthe
+Whenever possible, rely on the execu- output, even given the same input data same program will typically give slightly
+tion of programs instead of manual andparameters.Asalsodiscussedforrules different results every time it is executed
+procedures to modify data. Such manual 3and6,exactreproductionofresultsmay (even when receiving identical inputs and
+procedures are not only inefficient and in certain situations be essential. If com- parameters). However, given the same
+error-prone, they are also difficult to puter code is not systematically archived initial seed, all random numbers used in
+reproduce. If working at the UNIX alongitsevolution,backtrackingtoacode an analysis will be equal, thus giving
+command line, manual modification of state that gave a certain result may be a identicalresultseverytimeitisrun.There
+PLOSComputationalBiology | www.ploscompbiol.org 2 October2013 | Volume 9 | Issue 10 | e1003285
+
+--- PDF PAGE 3 ---
+is a large difference between observing highly summarized data. For instance, as it may be hard to locate the exact
+that a result has been reproduced exactly each value along a curve may in turn result underlying and supporting the
+or only approximately. While achieving represent averages from an underlying statement from a large pool of different
+equal results is a strong indication that a distribution. In order to validate and analyses with various versions.
+procedurehasbeenreproducedexactly,it fully understand the main result, it is To allow efficient retrieval of details
+is often hard to conclude anything when oftenusefultoinspectthedetailedvalues behind textual statements, we suggest
+achieving only approximately equal re- underlying the summaries. A common that statements are connected to under-
+sults. For analyses that involve random but impractical way of doing this is to lying results already from the time the
+numbers,thismeansthattherandomseed incorporatevariousdebugoutputsinthe statements are initially formulated (for
+should be recorded. This allows results to source code of scripts and programs. instance in notes or emails). Such a
+be reproduced exactly by providing the When the storage context allows, it is connection can for instance be a simple
+same seed to the random number gener- better to simply incorporate permanent filepathtodetailedresults,ortheIDofa
+ator in future runs. As a minimum, you output of all underlying data when a resultinananalysisframework,included
+should note which analysis steps involve main result is generated, using a system- within the text itself. For an even tighter
+randomness, so that a certain level of atic naming convention to allow the full
+integration, there are tools available to
+discrepancy can be anticipated when data underlying a given summarized
+help integrate reproducible analyses di-
+reproducing theresults. value to be easily found. We find
+rectly into textual documents, such as
+hypertext (i.e., html file output) to be
+Sweave [19], the GenePattern Word
+Rule 7: Always Store Raw Data particularly useful for this purpose. This
+add-in[4],andGalaxyPages[20].These
+behind Plots allows summarized results to be generat- solutions can also subsequently be used
+ed along with links that can be very
+in connection with publications, as dis-
+Fromthetimeafigureisfirstgenerated conveniently followed (by simply click-
+cussed in the next rule.
+toitbeingpart ofapublished article,itis ing) to the full data underlying each
+As a minimum, you should provide
+often modified several times. In some summarized value. When working with
+enough details along with your textual
+cases,suchmodificationsaremerelyvisual summarized results, you should as a
+interpretations so as to allow the exact
+adjustments to improve readability, or to minimumatleastoncegenerate,inspect,
+underlying results, or at least some
+ensure visual consistency between figures. and validate the detailed values underly-
+related results, to be tracked down in
+If raw data behind figures are stored in a ing the summaries.
+the future.
+systematicmanner,soastoallowrawdata
+for a given figure to be easily retrieved, Rule 9: Connect Textual
+one can simply modify the plotting Rule 10: Provide Public Access
+Statements to Underlying
+procedure, instead of having to redo the to Scripts, Runs, and Results
+Results
+wholeanalysis.Anadditionaladvantageof
+Last, but not least, all input data,
+thisisthat ifonereallywantstoreadfine Throughoutatypicalresearchproject,a
+scripts, versions, parameters, and inter-
+valuesinafigure,onecanconsulttheraw range of different analyses are tried and
+mediate results should be made publicly
+numbers. In cases where plotting involves interpretation of the results made. Al-
+and easily accessible. Various solutions
+morethan adirectvisualization ofunder- though the results of analyses and their
+havenowbecomeavailabletomakedata
+lying numbers, it can be useful to store corresponding textualinterpretationsare
+both the underlying data and the pro- clearly interconnected at the conceptual sharing more convenient, standardized,
+cessed values that are directly visualized. level,theytendtolivequiteseparatelives and accessible in particular domains,
+An example of this is the plotting of in their representations: results usually such as for gene expression data [21–
+histograms, where both the values before live on a data area on a server or 23]. Most journals allow articles to be
+binning (original data) and thecounts per personal computer, while interpretations supplemented with online material, and
+bin (heights of visualized bars) could be live in text documents in the form of some journals have initiated further
+stored.Whenplottingisperformedusinga personalnotesoremailstocollaborators. efforts for making data and code more
+command-based system like R, it is Such textual interpretations are not integrated with publications [3,24]. As a
+convenient to also store the code used to generally mere shadows of the results— minimum, you should submit the main
+make the plot. One can then apply slight they often involve viewing the results in data and source code as supplementary
+modifications to these commands, instead light of other theories and results. As material, and be prepared to respond to
+ofhavingtospecifytheplotfromscratch. such,theycarryextrainformation,while any requests for further data or method-
+As a minimum, one should note which at the same time having their necessary ology details by peers.
+data formed the basis of a given plot and support in a given result. Making reproducibility of your work
+howthisdata could bereconstructed. If you want to reevaluate your previ- by peers a realistic possibility sends a
+ous interpretations, or allow peers to strong signal of quality, trustworthiness,
+Rule 8: Generate Hierarchical maketheirownassessmentofclaimsyou and transparency. This could increase
+Analysis Output, Allowing make in a scientific paper, you will have the quality and speed of the reviewing
+LayersofIncreasingDetailtoBe to connect a given textual statement process on your work, the chances of
+(interpretation, claim, conclusion) to the your work getting published, and the
+Inspected
+precise results underlying the statement. chancesofyourworkbeingtakenfurther
+The final results that make it to an Making this connection when it is and cited by other researchers after
+article,beitplotsortables,oftenrepresent neededmaybedifficultanderror-prone, publication [25].
+PLOSComputationalBiology | www.ploscompbiol.org 3 October2013 | Volume 9 | Issue 10 | e1003285
+
+--- PDF PAGE 4 ---
+References
+1. CrockerJ,CooperML(2011)Addressingscien- 11. GiardineB,RiemerC,HardisonRC,BurhansR, systems. Scientific Programming Journal 13:
+tificfraud.Science334:1182. Elnitski L, et al. (2005) Galaxy: a platform for 219–237.
+2. JasnyBR,ChinG,ChongL,VignieriS(2011) interactivelarge-scalegenomeanalysis.Genome 19. Leisch F (2002) Sweave: dynamic generation of
+Data replication & reproducibility. Again, and Res15:1451–1455. statisticalreportsusingliteratedataanalysis.In:
+again, and again…. Introduction. Science 334: 12. Rex DE, Ma JQ, Toga AW (2003) The LONI Ha¨rdleW,Ro¨nzB,editors.Compstat:proceed-
+1225. Pipeline Processing Environment. Neuroimage ings in computational statistics. Heidelberg,
+3. Peng RD (2011) Reproducible research in 19:1033–1048. Germany:PhysikaVerlag.pp.575–580.
+computationalscience.Science334:1226–1227. 13. OinnT,AddisM,FerrisJ,MarvinD,SengerM, 20. GoecksJ,NekrutenkoA,TaylorJ(2010)Galaxy:
+4. MesirovJP(2010)Computerscience.Accessible etal.(2004)Taverna:atoolforthecomposition acomprehensiveapproachforsupportingacces-
+reproducibleresearch.Science327:415–416. and enactment of bioinformatics workflows. sible,reproducible,andtransparentcomputation-
+5. Nekrutenko A, Taylor J (2012) Next-generation Bioinformatics20:3045–3054. alresearchinthelifesciences.GenomeBiol11:
+sequencingdatainterpretation:enhancingrepro- 14. Piwowar HA, Day RS, Fridsma DB (2007) R86.
+21. BrazmaA,HingampP,QuackenbushJ,Sherlock
+ducibility and accessibility. Nat Rev Genet 13: Sharingdetailedresearchdataisassociatedwith
+G,SpellmanP,etal.(2001)Minimuminforma-
+667–672. increased citation rate. PLoS ONE 2: e308.
+tion about a microarray experiment (MIAME)-
+6. Ioannidis JP,AllisonDB,Ball CA,CoulibalyI, doi:10.1371/journal.pone.0000308.
+towardstandardsformicroarraydata.NatGenet
+Cui X, et al. (2009) Repeatability of published 15. Heroux MA, Willenbring JM (2009) Barely
+29:365–371.
+microarraygeneexpressionanalyses.NatGenet sufficient software engineering: 10 practices to
+22. BrazmaA,ParkinsonH,SarkansU,Shojatalab
+41:149–155. improve your cse software. In: 2009 ICSE
+M, Vilo J, et al. (2003) ArrayExpress–a public
+7. Steen RG (2011) Retractions in the scientific WorkshoponSoftwareEngineeringforCompu- repositoryformicroarraygeneexpressiondataat
+literature: is the incidence of research fraud tationalScienceandEngineering.pp.15–21. theEBI.NucleicAcidsRes31:68–71.
+increasing?JMedEthics37:249–253. 16. Schwab M, Karrenbach M, Claerbout J (2000) 23. EdgarR,DomrachevM,LashAE(2002)Gene
+8. PrinzF,SchlangeT,AsadullahK(2011)Believe Making scientific computations reproducible. ExpressionOmnibus:NCBIgeneexpressionand
+itornot:howmuchcanwerelyonpublisheddata ComputSciEng2:61–67. hybridizationarraydatarepository.NucleicAcids
+onpotentialdrugtargets?NatRevDrugDiscov 17. GobleCA,BhagatJ,AleksejevsS,Cruickshank Res30:207–210.
+10:712. D,MichaelidesD,etal.(2010)myExperiment:a 24. SneddonTP,LiP,EdmundsSC(2012)GigaDB:
+9. BegleyCG,EllisLM(2012)Drugdevelopment: repositoryandsocialnetworkforthesharingof announcing the GigaScience database. Giga-
+raise standards for preclinical cancer research. bioinformaticsworkflows.NucleicAcidsRes38: science1:11.
+Nature483:531–533. W677–682. 25. Prlic´A,ProcterJB(2012)Tensimplerulesforthe
+10. ReichM,LiefeldT,GouldJ,LernerJ,Tamayo 18. DeelmanE,SinghG,SuM-H,BlytheJ,GilY,et open development of scientific software. PLoS
+P,etal.(2006)GenePattern2.0.NatGenet38: al. (2005) Pegasus: a framework for mapping ComputBiol8:e1002802.doi:10.1371/journal.-
+500–501. complex scientific workflows onto distributed pcbi.1002802.
+PLOSComputationalBiology | www.ploscompbiol.org 4 October2013 | Volume 9 | Issue 10 | e1003285

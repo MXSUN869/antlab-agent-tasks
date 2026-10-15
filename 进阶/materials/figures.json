@@ -1,0 +1,8 @@
+[
+  {
+    "doc_id": "P2",
+    "xml_id": "pcbi.1007007.g001",
+    "label": "Fig 1",
+    "caption": "Iterative workflow for applying the 10 simple rules to the creation of Jupyter Notebooks. The cycle describes three overlapping phases of developing a well-documented and functional Jupyter Notebook. First, we organize and document the notebook (Rules 1–3). Second, the code is developed following the rules proposed here about quality standards (Rules 4–7). Finally, the notebook is made available, along with its data (Rule 8), in a manner encouraging public exploration and contribution (Rules 9–10)."
+  }
+]
