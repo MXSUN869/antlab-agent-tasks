@@ -79,12 +79,14 @@ AI 或他人的影响、执行证据与最终决定。
 - **AI 影响**：`improve()` 中的「关键字段额外加权」（`[a-z]+\d+`、`\d{4}-\d{2}`、
   版本/批次/实验/链路/耗时/中位数/平均/能耗/请求）由 AI 助手提出并实现；
   本人核验方式见 D2 的诊断——用换 ID、换顺序确认权重作用于文本而非固定标识。
-- **争议项（保留原文，不做单方面裁决）**：`R0_manual_review.csv` 对改进版 T05 记
+- **争议项及其裁定（2026-10-15 已定）**：`R0_manual_review.csv` 对改进版 T05 记
   `citation_support=是`（理由：P452207 明确说明未采集能耗，单独足以支持「证据不足」）；
   而旧的 `R0_improved_manual_review.csv` 对同一行记 `否`（理由：引用未直接支持该结论）。
-  这是一次真实的判分口径分歧。若采用严格口径，改进版的引用语义支持为 6/7，
-  即**改进在覆盖上出现一次退步**；`starter/judge_and_summarize.py` 保留两种口径的说明。
-  **该分歧需本人最终确认后方可写入结论。**
+  这是一次真实的判分口径分歧。**本人裁定采用「是」**，依据是题目对"证据不足"这类回答的要求：
+  「引用列出**支持这种判断的检查来源**」——P452207 正是该检查来源，故改进版的引用语义支持为
+  **7/7**。两份旧文件的冲突**作为判分历史保留在仓库中，不删除**。
+  影响：若改用严格逐条口径，则为 6/7，即**改进在覆盖上出现一次退步**；
+  `starter/judge_and_summarize.py` 的 `T05_IMPROVED_NOTE` 同时保留两种口径及其后果。
 - **证据链接**：`基础/results/scoring/improvement_pairing.csv`、
   `基础/results/scoring/R0_manual_review.csv`、`基础/results/scoring/R0_improved_manual_review.csv`、
   `基础/starter/student.py`
@@ -175,6 +177,40 @@ AI 或他人的影响、执行证据与最终决定。
 - **证据链接**：`SECURITY.md`、`tools/redact_endpoint.py`、`基础/.gitignore`、`.gitignore`
 - **最终决定**：`runs/` 随仓库提交；运行日志中的 Endpoint 替换为占位符；
   本地 `config.local.json` 继续排除在仓库之外。
+
+---
+
+## D7（进阶 B）把被改动的样机归位为题包原件
+
+- **时间与性质**：2026-10-15，事前决策（在提交前核查题包完整性时发现并处置）。事前记录。
+- **当时判断**：逐文件核对题包 SHA256 时发现 `进阶/challenge_b/challenge.py` 与题包原件不同，
+  差异正好落在**缓存键**上：题包原件是 `key = request['query'].strip().lower()`（只有 query），
+  而工作副本的版本是 `(query, doc_ids, snapshot, k)`。后者把 `spec.md` 第 5 条的
+  **预埋故障改掉了**，于是 `runs/baseline.json` 记录的现象无法用仓库里的代码复现。
+  判断依据是时间顺序：`baseline.json` 的 mtime 是 2026-10-14 22:32，
+  被改过的 `challenge.py` 是 2026-10-14 23:36——**基线先生成，故障后被改掉**。
+- **替代方案**：
+  1. 保留改过的版本，把 `baseline.json` 标为"不可复现"——被否决。
+     这会让 `cache_diagnosis.md` 的两组对照实验失去可重放性，B 的结论只能靠自述。
+  2. 保留改过的版本，并用它重新生成 `baseline.json`——被否决。
+     那等于**改写基线记录**以迁就代码，题目明确禁止。
+  3. 重新生成 `baseline.json` 但用题包原件——**不必要**：
+     经回放验证，原件与既有 `baseline.json` **7/7 用例逐字段一致**，
+     记录本来就是用原件跑出来的，因此只需把代码归位、不动记录。
+- **可否定该判断的观察**：若用题包原件回放仍不能复现 `baseline.json`，
+  则说明差异不止缓存键一处，应改为逐用例排查。
+  **实际观察：原件回放与基线记录在 evidence / locator_status / status / cache_hit 四项上
+  7/7 全部一致；改过的版本在 R02 上给出 `b02`/`cache_hit=False`，无法复现。**
+- **AI 影响**：发现与回放对照由 AI 助手执行（`tools/` 下的临时核对脚本）；
+  本人核验方式是确认三件事：① 桌面提供的那份文件哈希与 `进阶/文件校验.json` 一致；
+  ② 两份代码的回放差异只出现在缓存键相关的用例上（R01/R04/R05/R06 与 R03 都一致）；
+  ③ `runs/baseline.json` 的文件时间未被改动。
+- **证据链接**：`进阶/runs/pack_integrity.md`、`进阶/runs/cache_diagnosis.md`、
+  `进阶/challenge_b/challenge.py`、`进阶/文件校验.json`
+- **最终决定**：把 `challenge.py` **归位为题包原件**（哈希现与清单一致），
+  `runs/baseline.json` **保持未改写**；归位后重跑等价变体与边界检查，
+  数值与此前记录完全一致。`server.py` 保留候选人版本（`spec.md` 要求实现对比展示），
+  其题包原件完整保留为 `server_before_comparison.py`（字节一致）。
 
 ---
 

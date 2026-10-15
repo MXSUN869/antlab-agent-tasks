@@ -13,7 +13,7 @@
 | 基础：页面→后端→日志→原文闭环 | ✅ | ✅ | 多用户/并发未测 | `基础/results/request_trace_E1.md` |
 | 基础：40 次主请求（32 基线 + 8 改进） | ✅ | ✅ | 8 次输出截断无法评分 | `基础/results/scoring/main_runs_40.csv` |
 | 基础：失败与第二次执行全部保留 | ✅ | ✅ | 第二次执行提示词已改，非重复测量 | `failure_index.md`、`frozen_version.md` |
-| 基础：逐题核查正确性与引用支持 | ✅ | ✅ | R1/R2 判分为 AI 辅助初判，待本人复核 | `results/scoring/manual_review.csv` |
+| 基础：逐题核查正确性与引用支持 | ✅ | ✅ | 无（R1/R2 初判已由本人复核确认） | `results/scoring/manual_review.csv` |
 | 基础：一次诊断（其他原因） | ✅ | ✅ | 耗时差异不可归因 | `timing_confound_check.md` |
 | 基础：一次不调模型的顺序/ID 重映射检查 | ✅ | ✅ | 仅 3 段合成资料 | `diagnostic_notes.md` |
 | 基础：公开系统观察（ALCE） | ✅ 阅读 | ❌ 未复现 | 未安装、未运行 | `ALCE_observation.md` |
@@ -217,15 +217,19 @@ Rule 7 要求把分析做成可自动执行的管线。据此决定：不再把 
 > 而每条主结果的实际模型输入已逐字保存在 `runs/<run_id>.json` 的 `messages` 字段，
 > 因此**重放冻结实验不需要冻结版源码**。详见 `frozen_version.md`。
 
-> **题包文件完整性核查**：用题包自带的逐文件 SHA256 核对，**46 个文件完全一致**
-> （含全部题目数据、题面与 `challenge_b/spec.md`），**5 个文件不一致**。
-> 其中 3 个（`基础/.gitignore`、`基础/starter/student.py`、
-> `进阶/challenge_b/index.html`）是本次工作所为并留有记录；
-> 另外 2 个（`进阶/challenge_b/challenge.py`、`进阶/challenge_b/server.py`）
-> 的改动时间早于本报告，**原始版本未留在工作副本中，因此无法提供 diff**。
-> `runs/baseline.json` 由当前版本生成，这一点已如实标注；
-> 核查明细与建议的处理方式见 `进阶/runs/pack_integrity.md`。
-> 需要强调的是：**判据 `spec.md` 未被改动**，本次 B 的全部结论都是对照它得出的。
+> **题包文件完整性核查**：用题包自带的逐文件 SHA256 核对，**47 个文件完全一致**
+> （含全部题目数据、题面、`challenge_b/spec.md` 与归位后的 `challenge.py`），
+> **4 个文件不一致**：`基础/.gitignore`、`基础/starter/student.py`、
+> `进阶/challenge_b/index.html`、`进阶/challenge_b/server.py`，
+> **四者都是本次或按要求应由候选人完成的改动，且都留有记录**
+> （`server.py` 的题包原件完整保留为 `server_before_comparison.py`，字节一致）。
+>
+> 核查中还发现并修复了一处严重不一致：工作副本里的 `challenge.py` 曾被改过，
+> 把 `spec.md` 第 5 条的**预埋故障**（缓存键只含 query）改掉了，
+> 导致 `runs/baseline.json` 无法复现。已按题包原件归位，
+> 归位后回放与基线记录 **7/7 用例逐字段一致**；`baseline.json` 本身未改写。
+> 详见 `进阶/runs/pack_integrity.md`。
+> 需要强调的是：**判据 `spec.md` 始终未被改动**，本次 B 的全部结论都是对照它得出的。
 
 ---
 
@@ -347,10 +351,11 @@ R0 改进列与 R0 基线列只在 T01（改进后变为正确）与 T08（改�
 | T07 | `709b57b1…` | `d8d7dd22…` | 丙 | 丙 | 是→是 | 3.42 | 3.04 | −0.38 |
 | T08 | `5c12b3af…` | `6b8b604b…` | K17 | （截断） | 是→不适用 | 5.55 | 5.83 | **+0.28** |
 
-※ T05 的引用支持存在两种判断口径（`R0_manual_review.csv` 记"是"、
-旧 `R0_improved_manual_review.csv` 记"否"）。本报告采用前者并保留分歧说明；
-若采用严格口径，改进版引用支持为 6/7，即**在覆盖上出现一次退步**。
-该分歧需本人最终确认，见 `decisions.md` D3。
+※ T05 的引用支持存在两种判断口径（`R0_manual_review.csv` 记"是"、旧 `R0_improved_manual_review.csv` 记"否"）。
+**本人已于 2026-10-15 裁定采用「是」**，依据是题目「证据不足时引用列出支持这种判断的检查来源」
+——P452207 就是该检查来源，故改进版的引用语义支持为 **7/7**。
+两份旧文件的冲突作为判分历史保留在仓库中；若改用严格逐条口径则为 6/7，
+即**改进在覆盖上出现一次退步**。见 `decisions.md` D3。
 
 **结论**：答案正确数基线与改进版**同为 7/8**，失败题目由 T01 换成 T08；
 8 个耗时差值合计 −7.35 秒，其中 **T06（−5.34）与 T01（−1.00）占 86%**，

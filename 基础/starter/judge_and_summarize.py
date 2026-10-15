@@ -77,11 +77,14 @@ R1_R2_JUDGMENTS = {
     ("T08", "R2"): ("是", "是", "同R1：P223300规则与P183430三项状态共同支持K17，引用直接支持。"),
 }
 
-# R0 改进版 T05 的两份旧记录互相矛盾，这里采用理由更具体的判断并保留说明。
+# R0 改进版 T05 的两份旧记录互相矛盾。本人已于 2026-10-15 裁定采用「是」口径，
+# 但两份旧文件的冲突作为判分历史保留在仓库中，不删除。
 T05_IMPROVED_NOTE = (
     "P452207明确说明未采集功率和能耗数据，单独足以支持「证据不足」；P286497为补充背景。"
     "注：旧文件 R0_improved_manual_review.csv 对本行记 citation_support=否，与 "
-    "R0_manual_review.csv 同行理由冲突，此处采用后者并保留该差异说明。"
+    "R0_manual_review.csv 同行理由冲突。本人已于 2026-10-15 裁定采用「是」"
+    "（依据题目「证据不足时引用列出支持这种判断的检查来源」，P452207 即该检查来源），"
+    "故改进版的引用语义支持为 7/7；若改用严格口径则为 6/7，即改进在覆盖上退步一次。"
 )
 
 
@@ -128,7 +131,7 @@ def main():
                 "answer_correct": correct,
                 "citation_support": support,
                 "review_reason": reason,
-                "reviewer": "AI辅助初判（待本人复核）",
+                "reviewer": "本人复核确认（初判由 AI 辅助，2026-10-15）",
             }
         else:
             judgement = {
@@ -142,7 +145,7 @@ def main():
         if case_id == "T05" and condition == "R0" and variant == "improved":
             judgement["citation_support"] = "是"
             judgement["review_reason"] = T05_IMPROVED_NOTE
-            judgement["reviewer"] = "已有记录（R0_manual_review.csv），冲突已说明"
+            judgement["reviewer"] = "本人已裁定口径（R0_manual_review.csv），分歧已记录"
 
         merged.append({**run, **judgement})
 

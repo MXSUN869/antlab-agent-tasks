@@ -36,7 +36,9 @@
 | `基础/starter/score_runs.py` | 沿用题包骨架的结果表口径 | 逐例判分表生成 |
 | `基础/.gitignore` | 移除 `runs/` | 题目要求运行记录随仓库提交；题包原有设置与之冲突 |
 | `进阶/challenge_b/my_engine.py` | **新增** | 进阶 B 的最小修复（兼容 Engine 实现） |
-| `进阶/challenge_b/index.html` | 修复对比面板的中文乱码，补「修复前后行为对比」区块 | 题包页面原本只做 JSON 呈现，且对比区块以乱码字符写入 |
+| `进阶/challenge_b/challenge.py` | **归位为题包原件** | 工作副本中的该文件曾被改过（缓存键加入了 doc_ids/snapshot/k），把 `spec.md` 第 5 条的预埋故障改掉了，导致 `runs/baseline.json` 无法复现。已从题包原件恢复，现哈希与 `进阶/文件校验.json` 一致；详见 `进阶/runs/pack_integrity.md` |
+| `进阶/challenge_b/server.py` | 新增 `/api/comparison` 接口与修复前后对比 | `spec.md` 要求候选人实现差异/来源/状态的展示；题包原件**完整保留**为 `server_before_comparison.py`（字节一致，可直接 diff） |
+| `进阶/challenge_b/index.html` | 修复对比面板的中文乱码，补「修复前后行为对比」区块 | 该文件按 `spec.md` 本就应由候选人提升；`index_before_comparison.html` 为改前快照 |
 | `进阶/runs/test_variants.py`、`test_boundary.py` | 改为与当前工作目录无关，并同时测两个引擎 | 原脚本从仓库根目录运行时 `ModuleNotFoundError: challenge_b` |
 | `进阶/runs/regression_and_variants.md` | **新增** | 回归、变体与未解决边界的证据集 |
 | `tools/redact_endpoint.py` | **新增** | 提交前移除运行日志中的 Endpoint |
@@ -230,14 +232,15 @@ python tools/redact_endpoint.py
 | 进阶 B：页面展示请求/快照/证据/验证来源/修复前后 | ✅ 已完成 | `challenge_b/index.html` |
 | 三项决定 + AI 影响 | ✅ 已完成 | `decisions.md` |
 | AI 声明五项 | ✅ 已完成 | `declaration.md` |
-| **R1/R2 判分由本人复核** | ⚠️ **待本人复核** | `reviewer` 列标为「AI辅助初判」 |
+| **R1/R2 判分由本人复核** | ✅ 已复核确认（2026-10-15） | `reviewer` 列标为「本人复核确认（初判由 AI 辅助）」 |
 | 论文原文命题与位置（E2） | ✅ 已补 | `report.md` 第 2 节 |
 | 加大 `max_tokens` 后重跑 | ❌ 未做（有意不做，见 D3） | `decisions.md` D3 |
 | 同窗口交错 A/B 重复实验 | ❌ 未做 | `timing_confound_check.md` |
 | 语义支持自动判定 | ❌ 未实现，如实标 `not_checked` | `进阶/challenge_b/spec.md` 第 4 条 |
 | 多用户 / 多 worker 并发 | ❌ 未测 | `declaration.md` 第 5 项 |
-| 题包文件完整性核查（逐文件 SHA256） | ✅ 已做：46 个一致、5 个不一致 | `进阶/runs/pack_integrity.md` |
-| `challenge.py` / `server.py` 的原始版本与 diff | ⚠️ **缺口，需本人补** | `进阶/runs/pack_integrity.md`「未解决的缺口」 |
+| 题包文件完整性核查（逐文件 SHA256） | ✅ 已做：47 个一致、4 个不一致 | `进阶/runs/pack_integrity.md` |
+| 样机预埋故障被改动的问题 | ✅ 已修复：`challenge.py` 归位为题包原件，`baseline.json` 恢复可复现 | `进阶/runs/pack_integrity.md` |
+| `index.html` 的题包原件 | ⚠️ 未留存（该文件本就应由候选人修改，影响有限） | `进阶/runs/pack_integrity.md`「仍然存在的一处小缺口」 |
 
 ---
 

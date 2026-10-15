@@ -7,7 +7,7 @@
 # 因此这里把「仍与题包校验值一致」的文件锁定为不转换（-text），
 # 使它们在任意平台检出后字节不变、SHA256 可复算。
 #
-# 被本人修改过的文件（student.py / .gitignore / index.html / challenge.py / server.py）
+# 被修改过的文件（student.py / .gitignore / index.html / server.py）
 # 以及本次新增的文件不在此列，保持文本处理，以便评审能直接阅读 diff。
 #
 # 由 tools 生成；改动题包文件后请同步更新。
@@ -39,6 +39,7 @@
 进阶/05_提交与报告格式.md -text
 进阶/06_收集表填写说明.md -text
 进阶/README.md -text
+进阶/challenge_b/challenge.py -text
 进阶/challenge_b/data.json -text
 进阶/challenge_b/run_cases.py -text
 进阶/challenge_b/spec.md -text

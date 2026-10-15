@@ -9,17 +9,12 @@ class Engine:
 
     def evaluate(self, request, corpus, draft):
         started = time.perf_counter()
-        key = (
-        request['query'].strip().lower(),
-        tuple(sorted(request['doc_ids'])),
-        request['snapshot'],
-        request['k']
-)
+        key = request['query'].strip().lower()
         hit = key in self.cache
         if hit:
             result = copy.deepcopy(self.cache[key])
         else:
-            terms = set(request['query'].strip().lower().split())
+            terms = set(key.split())
             ranked = sorted(corpus, key=lambda b: (-len(terms & set(b['tags'])), b['id']))
             selected = [b for b in ranked[:request['k']] if terms & set(b['tags'])]
             evidence = [b for b in selected if b['doc_id'] in request['doc_ids'] and b['snapshot'] == request['snapshot']]

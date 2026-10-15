@@ -40,7 +40,7 @@
 | 工具 | 用途 | 可核验痕迹 |
 |---|---|---|
 | ChatGPT | 【待确认】实现 `基础/starter/student.py` 的提示词与 `improve()` 排序逻辑；生成判分脚本初版；完成 40 次正式调用与结果整理；起草报告结构 | `基础/starter/student.py`、`基础/starter/score_runs.py`、`基础/results/report/report.md` |
-| DeepSeek Harness（AI 编码助手） | 本次续做：① 从原始日志重建 40 次主结果表并校验 messages 一致性（`starter/build_main_results.py`）；② R1/R2 判分初判与五组对照汇总（`starter/judge_and_summarize.py`）；③ 输出截断失败索引（`failure_index.md`）；④ 执行时段混淆诊断（`timing_confound_check.md`）；⑤ 端到端追溯脚本与记录（`starter/trace_one_request.py`、`request_trace_E1.md`）；⑥ 进阶 B 的缓存身份修正、回归/变体/边界整理与页面乱码修复；⑦ 起草本声明、`decisions.md` 与整合报告；⑧ 提交安全清理（`tools/redact_endpoint.py`） | 见本仓库 git 提交记录与上述文件 |
+| DeepSeek Harness（AI 编码助手） | 本次续做：① 从原始日志重建 40 次主结果表并校验 messages 一致性（`starter/build_main_results.py`）；② R1/R2 判分初判与五组对照汇总（`starter/judge_and_summarize.py`）；③ 输出截断失败索引（`failure_index.md`）；④ 执行时段混淆诊断（`timing_confound_check.md`）；⑤ 端到端追溯脚本与记录（`starter/trace_one_request.py`、`request_trace_E1.md`）；⑥ 进阶 B 的缓存身份修正、回归/变体/边界整理与页面乱码修复；⑦ 题包逐文件 SHA256 完整性核查，并发现样机预埋故障曾被改动、回放验证后归位为题包原件（`进阶/runs/pack_integrity.md`）；⑧ 起草本声明、`decisions.md` 与整合报告；⑨ 提交安全清理（`tools/redact_endpoint.py`） | 见本仓库 git 提交记录与上述文件 |
 
 **AI 没有被用于**：生成任何一次模型回答、编造任何一条引用、修改任何 `runs/` 下的原始日志、
 或改写 `draft`/输入数据以求通过。
@@ -56,8 +56,11 @@
 2. **判分口径**：`answer_correct`（能否由本次可见段落推出）与 `citation_support`
    （每条引用原文是否真的支持结论）**分开判断**，不把「引用 ID 在输入内」当作「内容被支持」。
    逐例理由保存在 `results/scoring/manual_review.csv` 的 `review_reason` 列，可逐条核对。
-3. **R1/R2 两组判分是 AI 辅助初判**：`reviewer` 列标为「AI辅助初判（待本人复核）」。
-   本人已/将逐条复核其理由所引用的段落原句。复核前，这两组不得作为最终结论。
+3. **R1/R2 两组判分**：初判由 AI 助手给出（逐条附理由与所引原句），
+   **本人已于 2026-10-15 逐条复核并确认无误**，`reviewer` 列据实标为
+   「本人复核确认（初判由 AI 辅助）」。复核所用的速览见
+   `results/scoring/R1_R2_复核速览.md`（由 `tools/make_review_sheet.py` 生成，
+   只保留问题、答案、引用与被引段落的判别性首句，便于逐条核对）。
 4. **改进效果的解释**：不接受「平均耗时更低」作为改进有效的证据，因为基线与改进版
    相隔约 8 小时，且平均差有 86% 来自两道题（见 `timing_confound_check.md`）。
 5. **进阶 B 的因果判断**：先读源码、再跑对照，且对照中只有「是否复用缓存」一个变量变化；
@@ -94,6 +97,18 @@
   不参与主结果。冻结版源码未被单独归档（已知缺口），但冻结版的逐字提示词模板
   （`frozen_prompt_893e1e16.txt`）与每条主结果的实际 `messages` 均已保存，
   重放不需要冻结版源码。完整时间线见 `基础/results/scoring/frozen_version.md`。
+- **样机预埋故障曾被改动（已修复）**：进阶 B 工作副本中的 `challenge_b/challenge.py`
+  曾被改过，把 `spec.md` 第 5 条的预埋故障（缓存键只含 query）改掉了，
+  导致 `runs/baseline.json` 无法用仓库中的代码复现。已按题包原件归位
+  （现哈希与 `进阶/文件校验.json` 一致），`baseline.json` **未改写**；
+  归位后回放与基线记录 **7/7 用例逐字段一致**。
+  发现与回放对照由 AI 助手执行，本人核验了三点：题包原件的哈希一致、
+  两份代码的差异只出现在缓存键相关用例上、基线记录的文件时间未被改动。
+  详见 `进阶/runs/pack_integrity.md` 与 `decisions.md` D7。
+- **`index.html` 的题包原件未留存**：`spec.md` 明确要求候选人提升该页面的展示，
+  因此它被修改是预期的；未留存的是**改前那份题包基线页面的副本**。
+  仓库中的 `index_before_comparison.html` 是候选人的改前快照，
+  经换行符归一后仍不等同于题包原件，本仓库**不作等同声明**。
 - **事后整理声明**：`进阶/runs/cache_diagnosis.md` 中的假设与预测**晚于**基线观察，
   已在原文中标注为回顾性提出，不作为预注册预测使用。
 
