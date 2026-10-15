@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "5b59bb39-ff29-4af6-bd82-d8885330d1f1",
+  "utc": "2026-10-10T02:24:39.450624+00:00",
+  "case_id": "T05",
+  "split": "evaluation",
+  "condition": "K",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "893e1e16e1343ec2f8742f5aaad960910f821304ed47ba4df11585d269510a36",
+  "original_passage_ids": [
+    "P286497",
+    "P371242"
+  ],
+  "selected_passage_ids": [
+    "P286497",
+    "P371242"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n请遵守以下规则：\n1. 只能使用用户提供的资料回答，不能凭空补充事实。\n2. 如果资料不足以确定答案，answer 必须写“证据不足”。\n3. citations 只能填写真正支持答案的资料 ID。\n4. 输出必须是合法 JSON，不要输出 JSON 之外的内容。\n5. JSON 格式必须严格为：\n{\"answer\":\"简短答案\",\"citations\":[\"P...\"]}"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n听澜项目R4版本在2026-06校内组每次请求平均消耗多少焦耳？\n\n资料：\n[P286497] 听澜项目R4版本在2026-06的记录：校内组TL46经共享网关完成32次问答，客户端记录请求耗时、响应状态和模型显示名称。 资料表还登记文档快照、问题清单、检索候选数与人工反馈。检查员把格式错误、拒答和引用错误分列，遇到版本切换时重新核对实际使用的文档标识。一个批次的中位数不用于推断另一批次的首字延迟。 来源栏包含资料页、采集日期和签署状态。页面只显示与本次请求快照相同的证据，引用可定位和内容得到支持分别记录。临时预热、正式批次、迁移批次采用各自的清单，数字之间不直接合并。 采集端分别记录请求发出时间、收到完整响应时间和错误类型；服务端内部阶段没有被观测。每条回归问题附资料版本和文档范围，合并报表时先检查这些字段，再计算计数与中位数。 每周核对本页行号、资料版本与签署记录。\n\n[P371242] 听澜项目R4版本在2026-06的压力组使用八并发请求，96项返回成功、4项超时，P50为3.7秒；项目另列压力组汇总。 本页还记录版本升级后的回滚入口、会话恢复尝试和文档区域映射状态。摘要用于快速浏览，正式决定仍依据签署规则及原始检查项。只有项目、版本、窗口、批次一致的记录才能放在一次决策中比较。 执行环境登记客户端运行时、接口模式与日志保留策略。连续请求按输入顺序保存，每次返回的使用量按服务字段原样写入；缺失字段保持空白。复核记录会链接到当时的输入摘要和结果文件，便于后来核算。 质量复核表同时保存通过项、拒答项和异常项，避免只汇总有输出的请求。后续小范围修复可能改善其中一类错误，但只有原始输入和首次结果仍可访问，才方便判断改善来自哪里。 每周核对本页行号、资料版本与签署记录。\n\n请根据以上资料回答问题。"
+    }
+  ],
+  "input_characters": 974,
+  "status": "ok",
+  "elapsed_seconds": 2.9375333999996656,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"answer\":\"证据不足\",\"citations\":[]}",
+          "reasoning_content": "我们需要回答用户问题。需要严格基于资料。问题是：听澜项目R4版本在2026-06校内组每次请求平均消耗多少焦耳？资料中关于校内组：P286497 听澜项目R4版本在2026-06的记录：校内组TL46经共享网关完成32次问答，客户端记录请求耗时、响应状态和模型显示名称。 但没有提到焦耳/能量消耗。P371242压力组，也无焦耳。因此证据不足。需要输出 JSON：{\"answer\":\"证据不足\",\"citations\":[]} 还是 citations 可以列 P286497? 规则 citations 只能填写真正支持答案的资料 ID。如果 answer 是证据不足，没有支持具体结论的，可能 citations 空。但也许可以引用 P286497 证明有校内组但没有焦耳？ 规则说如果资料不足以确定答案，answer 必须“证据不足”。citations 只能真正支持答案。支持“证据不足”的资料可以是 P286497? 但应该 citations 留空？ 看类似任务，证据不足时 citations 可以为空。但可能允许引用相关但未提供数据。最好严格：没有资料支持焦耳，故 citations 空。输出合法 JSON。确保无多余内容。",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791599081,
+    "id": "0217915990790629e13d3b3ea5f02ecc58377d19143e38db87cc3",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 275,
+      "prompt_tokens": 592,
+      "total_tokens": 867,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 263
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 275,
+    "prompt_tokens": 592,
+    "total_tokens": 867,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 263
+    }
+  },
+  "http_status": 200
+}

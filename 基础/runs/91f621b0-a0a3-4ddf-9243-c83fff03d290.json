@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "91f621b0-a0a3-4ddf-9243-c83fff03d290",
+  "utc": "2026-10-14T03:46:11.033658+00:00",
+  "case_id": "T08",
+  "split": "evaluation",
+  "condition": "K",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "3a8c56bb7354a5e7d2b7f63be69a5d776c8cf9e8a6557688c9e2ba35e9834d43",
+  "original_passage_ids": [
+    "P436140",
+    "P183430"
+  ],
+  "selected_passage_ids": [
+    "P436140",
+    "P183430"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n规则：\n\n1. 只能使用用户提供的资料回答。\n2. 不允许使用外部知识补充。\n3. 如果资料不足以确定答案，answer 必须写“证据不足”。\n4. citations 只能填写真正支持答案的资料ID。\n5. 不要输出推理过程。\n6. 只输出合法JSON。\n\n格式必须严格为：\n\n{\"answer\":\"简短答案\",\"citations\":[\"P123456\"]}\n"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n\n归舟项目R6版本在2026-09复核表中的selected_snapshot是什么？只输出快照编号。\n\n资料：\n\n[P436140] 归舟项目R6版本在2026-09的迁移批次XQ61处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。 本页还记录版本升级后的回滚入口、会话恢复尝试和文档区域映射状态。摘要用于快速浏览，正式决定仍依据签署规则及原始检查项。只有项目、版本、窗口、批次一致的记录才能放在一次决策中比较。 执行环境登记客户端运行时、接口模式与日志保留策略。连续请求按输入顺序保存，每次返回的使用量按服务字段原样写入；缺失字段保持空白。复核记录会链接到当时的输入摘要和结果文件，便于后来核算。 质量复核表同时保存通过项、拒答项和异常项，避免只汇总有输出的请求。后续小范围修复可能改善其中一类错误，但只有原始输入和首次结果仍可访问，才方便判断改善来自哪里。 每周核对本页行号、资料版本与签署记录。\n\n[P183430] 归舟项目R6版本在2026-09的记录：复核表GZ69显示K16文本问答通过、区域定位4项偏移；K17三项检查通过；K18解析较快但会话恢复2项失败。 来源栏包含资料页、采集日期和签署状态。页面只显示与本次请求快照相同的证据，引用可定位和内容得到支持分别记录。临时预热、正式批次、迁移批次采用各自的清单，数字之间不直接合并。 该记录保留批次编号、样本清单散列和负责人签名。复核者按固定输入重放，逐条保存原始响应、重试状态与引用位置；后续补录单列，不能覆盖第一次结果。耗时由客户端从提交请求计到读完响应，记录不含服务端排队拆分。 批次登记表标注生产、试运行与迁移三类用途；任务数量相似并不意味着能混用结果。每次替换模型或检索设置后，记录者保留旧配置散列，便于按真实执行版本重新计算。 每周核对本页行号、资料版本与签署记录。\n\n请直接输出JSON答案。"
+    }
+  ],
+  "input_characters": 1021,
+  "status": "ok",
+  "elapsed_seconds": 8.277080500000011,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"answer\":\"证据不足\",\"citations\":[]}",
+          "reasoning_content": "我们需要回答用户问题：归舟项目R6版本在2026-09复核表中的selected_snapshot是什么？只输出快照编号。需要严格基于资料。citations只能填支持答案的资料ID。输出JSON。资料中有两个，P436140 提到归舟项目R6版本在2026-09的迁移批次XQ61处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。P183430 提到复核表GZ69，但没有 selected_snapshot 字段？也没有 selected_snapshot 这个词。问题问“复核表中的selected_snapshot是什么？” 资料中 P436140 提到快照S19完成初步定位。但 selected_snapshot 可能指快照编号？ 我们需要判断。资料没有明确“selected_snapshot”字段，只有“快照S19完成初步定位”。这可能就是 selected_snapshot？问题要求只输出快照编号。答案可能是 S19。但需要严格基于证据：资料没有明确 selected_snapshot = S19，只提到快照S19。它可能不是复核表中的selected_snapshot。但问题专门说“复核表中的selected_snapshot”，资料中没有这个词。根据规则，如果资料不足以确定答案，answer必须写“证据不足”。但是否可以推断 selected_snapshot 是 S19？ 需谨慎。资料 P436140：归舟项目R6版本在2026-09的迁移批次XQ61... 快照S19完成初步定位。P183430：归舟项目R6版本在2026-09的记录：复核表GZ69... 没有快照编号。没有“selected_snapshot”字段。所以直接答案“证据不足”更符合规则。但用户要求“只输出快照编号”。如果我们回答证据不足，可能不符合只输出快照编号，但规则优先。需要输出 JSON {\"answer\":\"证据不足\",\"citations\":[]}？ 但规则说 citations 只能填写真正支持答案的资料ID。如果 answer 是证据不足，可能 citations 为空。但是否需要引用资料？如果证据不足，没有资料支持答案，citations 应为空。但也可引用两个资料表明没有 selected_snapshot？但规则说 citations 只能填写真正支持答案的资料ID。证据不足不是由资料支持，而是资料缺失。所以空。\n\n但是要仔细：可能 selected_snapshot 是 S19，因为在 P436140 中有“快照S19完成初步定位”。问题“归舟项目R6版本在2026-09复核表中的selected_snapshot是什么？” 资料中 P436140 没有“复核表”这个词？有“复核记录会链接到当时的输入摘要和结果文件”，有“快照S19”。P183430 有“复核表GZ69”。两个资料都涉及R6 2026-09。P183430 复核表 GZ69 没有 selected_snapshot。P436140 有迁移批次XQ61，快照S19。如果 selected_snapshot 是复核表中的一个字段，资料没有提供字段值。因此证据不足。\n\n但用户指定“只输出快照编号”。如果答证据不足，不是快照编号。但规则说资料不足必须写证据不足。因此最终应该是 {\"answer\":\"证据不足\",\"citations\":[]}。\n\n需要确保只输出合法JSON。没有多余文字。\n\n但再检查是否有可能 selected_snapshot 就是 S19？ 资料中“快照S19完成初步定位”与“复核表”可能相关？ P436140 开头：“归舟项目R6版本在2026-09的迁移批次XQ61处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。 本页还记录版本升级后的回滚入口、会话恢复尝试和文档区域映射状态。” 这段话没有说“复核表”。P183430 说“归舟项目R6版本在2026-09的记录：复核表GZ69显示...”。所以问题中的“复核表”可能指 GZ69，而 selected_snapshot 未出现。无法确定 S19 是否属于复核表。所以证据不足。\n\n最终输出 JSON。注意格式。",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791949579,
+    "id": "0217919495711474de2cf568a9a04a3957d59acb492788b14d990",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 929,
+      "prompt_tokens": 621,
+      "total_tokens": 1550,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 917
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 929,
+    "prompt_tokens": 621,
+    "total_tokens": 1550,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 917
+    }
+  },
+  "http_status": 200
+}

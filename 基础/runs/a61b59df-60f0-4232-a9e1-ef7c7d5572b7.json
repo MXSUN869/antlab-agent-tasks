@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "a61b59df-60f0-4232-a9e1-ef7c7d5572b7",
+  "utc": "2026-10-10T02:25:01.121577+00:00",
+  "case_id": "T08",
+  "split": "evaluation",
+  "condition": "K",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "893e1e16e1343ec2f8742f5aaad960910f821304ed47ba4df11585d269510a36",
+  "original_passage_ids": [
+    "P436140",
+    "P183430"
+  ],
+  "selected_passage_ids": [
+    "P436140",
+    "P183430"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n请遵守以下规则：\n1. 只能使用用户提供的资料回答，不能凭空补充事实。\n2. 如果资料不足以确定答案，answer 必须写“证据不足”。\n3. citations 只能填写真正支持答案的资料 ID。\n4. 输出必须是合法 JSON，不要输出 JSON 之外的内容。\n5. JSON 格式必须严格为：\n{\"answer\":\"简短答案\",\"citations\":[\"P...\"]}"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n归舟项目R6版本在2026-09复核表中的selected_snapshot是什么？只输出快照编号。\n\n资料：\n[P436140] 归舟项目R6版本在2026-09的迁移批次XQ61处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。 本页还记录版本升级后的回滚入口、会话恢复尝试和文档区域映射状态。摘要用于快速浏览，正式决定仍依据签署规则及原始检查项。只有项目、版本、窗口、批次一致的记录才能放在一次决策中比较。 执行环境登记客户端运行时、接口模式与日志保留策略。连续请求按输入顺序保存，每次返回的使用量按服务字段原样写入；缺失字段保持空白。复核记录会链接到当时的输入摘要和结果文件，便于后来核算。 质量复核表同时保存通过项、拒答项和异常项，避免只汇总有输出的请求。后续小范围修复可能改善其中一类错误，但只有原始输入和首次结果仍可访问，才方便判断改善来自哪里。 每周核对本页行号、资料版本与签署记录。\n\n[P183430] 归舟项目R6版本在2026-09的记录：复核表GZ69显示K16文本问答通过、区域定位4项偏移；K17三项检查通过；K18解析较快但会话恢复2项失败。 来源栏包含资料页、采集日期和签署状态。页面只显示与本次请求快照相同的证据，引用可定位和内容得到支持分别记录。临时预热、正式批次、迁移批次采用各自的清单，数字之间不直接合并。 该记录保留批次编号、样本清单散列和负责人签名。复核者按固定输入重放，逐条保存原始响应、重试状态与引用位置；后续补录单列，不能覆盖第一次结果。耗时由客户端从提交请求计到读完响应，记录不含服务端排队拆分。 批次登记表标注生产、试运行与迁移三类用途；任务数量相似并不意味着能混用结果。每次替换模型或检索设置后，记录者保留旧配置散列，便于按真实执行版本重新计算。 每周核对本页行号、资料版本与签署记录。\n\n请根据以上资料回答问题。"
+    }
+  ],
+  "input_characters": 1025,
+  "status": "ok",
+  "elapsed_seconds": 6.974064299999554,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "length",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "",
+          "reasoning_content": "我们需要回答用户问题：归舟项目R6版本在2026-09复核表中的selected_snapshot是什么？只输出快照编号。\n\n需要严格基于资料。资料中有 P436140 和 P183430。问题问“归舟项目R6版本在2026-09复核表中的selected_snapshot是什么？只输出快照编号。”\n\n在 P436140 提到“归舟项目R6版本在2026-09的迁移批次XQ61处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。” 这可能是快照 S19。但没有明确说 selected_snapshot。 P183430 提到“页面只显示与本次请求快照相同的证据”，没有具体快照编号。问的是复核表中的 selected_snapshot 是什么？资料中 P436140 有快照S19完成初步定位。是否可回答 S19？需要看是否足以确定 selected_snapshot。问题明确“只输出快照编号”。如果资料没有明确 selected_snapshot 字段，只说“快照S19完成初步定位”。可能答案是 S19。但需要谨慎：selected_snapshot 可能是复核表中的字段，资料只说快照S19完成初步定位。是否等于 selected_snapshot？不一定。但用户只要求输出快照编号，可能期望从资料中找。P436140 是归舟项目R6版本在2026-09的迁移批次XQ61，快照S19完成初步定位。这似乎相关。P183430 没有 selected_snapshot。所以答案应该是 S19。citations 应填 P436140？但要求只输出快照编号？然而系统要求输出合法 JSON，格式 {\"answer\":\"简短答案\",\"citations\":[\"P...\"]}。用户说“只输出快照编号。” 是指 answer 只输出快照编号，但整个输出必须是 JSON。所以 answer 为 \"S19\"，citations [\"P436140\"]。需要确保 JSON 合法。没有其他内容。\n\n但是否证据不足？如果 selected_snapshot 字段未明确，可能证据不足。但根据资料，快照S19是唯一快照编号，且与归舟R6 2026-09相关。问题问“复核表中的selected_snapshot是什么？” 在 P436140 中说的是“迁移批次XQ61处理相近题目...快照S19完成初步定位。” 这不是复核表 selected_snapshot 明确。P183430 是复核表GZ69，但没提快照编号。它说“页面只显示与本次请求快照相同的证据”。没有快照编号。所以严格来说，资料没有明确“selected_snapshot”字段的值。但用户可能期望从“快照S19”推断。系统规则：如果资料不足以确定答案，answer 必须写“证据不足”。这里是否存在不足？我们需要判断。\n\n问题：归舟项目R6版本在2026-09复核表中的selected_snapshot是什么？只输出快照编号。\n\n资料：\nP436140：归舟项目R6版本在2026-09的迁移批次XQ61处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。\nP183430：归舟项目R6版本在2026-09的记录：复核表GZ69显示K16文本问答通过、区域定位4项偏移；K17三项检查通过；K18解析较快但会话恢复2项失败。... 页面只显示与本次请求快照相同的证据...\n\n“selected_snapshot” 是什么？在 P436140 中“快照S19完成初步定位” 是快照 S19。不是明确 selected_snapshot，但可能是。P183430 提到复核表GZ69但没有 selected_snapshot。所以如果要严格，可能“证据不足”。但问题要求只输出快照编号，如果回答“证据不足”不符合只输出编号。但规则优先？系统规则要求如果资料不足，answer 必须写“证据不足”。所以需要确定是否足够。\n\n用户问题中的“selected_snapshot”可能是特定字段名，资料中没有出现“selected_snapshot”这个词。资料中只出现“快照S19完成初步定位”和“本次请求快照”。没有明确说 selected_snapshot = S19。所以严格基于证据，不能确定 selected_snapshot。但也许在上下文中“快照S19完成初步定位”就是 selected_snapshot。需要权衡。\n\n作为问答助手，严格基于证据。如果资料没有明确给出 selected_snapshot，应回答证据不足。但问题说“只输出快照编号”，如果证据不足则输出“证据不足”不是快照编号，但规则要求。\n\n让我们",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791599107,
+    "id": "021791599100723b6facf02ebac6f8e2d6055a5df25a907cc237e",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1024,
+      "prompt_tokens": 622,
+      "total_tokens": 1646,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1024
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 1024,
+    "prompt_tokens": 622,
+    "total_tokens": 1646,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1024
+    }
+  },
+  "http_status": 200
+}

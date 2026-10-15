@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "af18c7b1-4760-44b8-a3a2-4183c037042b",
+  "utc": "2026-10-14T03:35:17.658700+00:00",
+  "case_id": "D02",
+  "split": "dev",
+  "condition": "E",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "3a8c56bb7354a5e7d2b7f63be69a5d776c8cf9e8a6557688c9e2ba35e9834d43",
+  "original_passage_ids": [
+    "P562395",
+    "P974958"
+  ],
+  "selected_passage_ids": [
+    "P562395",
+    "P974958"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n规则：\n\n1. 只能使用用户提供的资料回答。\n2. 不允许使用外部知识补充。\n3. 如果资料不足以确定答案，answer 必须写“证据不足”。\n4. citations 只能填写真正支持答案的资料ID。\n5. 不要输出推理过程。\n6. 只输出合法JSON。\n\n格式必须严格为：\n\n{\"answer\":\"简短答案\",\"citations\":[\"P123456\"]}\n"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n\n青岚项目R6版本在2026-04夜间组使用的服务端GPU具体型号是什么？\n\n资料：\n\n[P562395] 批次QL62的复核补页：QL62台账登记服务区域zone-c、完整响应耗时与计费单位；资产、设备遥测与推理节点字段均未被采集。 执行环境登记客户端运行时、接口模式与日志保留策略。连续请求按输入顺序保存，每次返回的使用量按服务字段原样写入；缺失字段保持空白。复核记录会链接到当时的输入摘要和结果文件，便于后来核算。 登记系统保存字段定义和计算口径；百分比的分子分母都能追到清单行。数据在导出前经过一次格式检查，但格式检查通过并不意味着引文语义正确。人员复核与机器状态同时留在记录中。 页面记录打开原文的位置、对应的资料快照和检查状态。引用位置存在时仍可能出现内容不支持的回答，所以核对员保存了主张文本和证据原句；这些字段可在审阅报告中逐项追溯。 每周核对本页行号、资料版本与签署记录。\n\n[P974958] 青岚项目R6版本在2026-03的探索组采用24个临时问题，完整支持率为75%，一项耗时中位数为6.0秒。 登记系统保存字段定义和计算口径；百分比的分子分母都能追到清单行。数据在导出前经过一次格式检查，但格式检查通过并不意味着引文语义正确。人员复核与机器状态同时留在记录中。 资料表还登记文档快照、问题清单、检索候选数与人工反馈。检查员把格式错误、拒答和引用错误分列，遇到版本切换时重新核对实际使用的文档标识。一个批次的中位数不用于推断另一批次的首字延迟。 同一资料在多个视图中使用时，系统保留共同文档编号和各自页面位置。跨页引用由原始片段与映射关系组成；页面预览属于呈现数据，不能替代经过复核的文本内容。 每周核对本页行号、资料版本与签署记录。\n\n请直接输出JSON答案。"
+    }
+  ],
+  "input_characters": 952,
+  "status": "ok",
+  "elapsed_seconds": 2.781414400000358,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"answer\":\"证据不足\",\"citations\":[]}",
+          "reasoning_content": "我们需要回答中文问题，必须只使用资料。问：青岚项目R6版本在2026-04夜间组使用的服务端GPU具体型号是什么？\n\n资料有两个：P562395 批次QL62的复核补页，提到 QL62台账登记服务区域zone-c、完整响应耗时与计费单位；资产、设备遥测与推理节点字段均未被采集。执行环境登记客户端运行时、接口模式与日志保留策略。... 没提青岚项目R6 2026-04 夜间组 GPU。\n\nP974958 青岚项目R6版本在2026-03的探索组采用24个临时问题，完整支持率75%，一项耗时中位数6.0秒。... 也没提2026-04夜间组 GPU。资料不足以确定。answer 必须“证据不足”。citations 可以填支持证据不足？通常 citations 只能填真正支持答案的资料ID。如果没有支持，可以空数组吗？格式要求 citations 数组。规则说如果资料不足以确定答案，answer 必须写“证据不足”。citations 只能填写真正支持答案的资料ID。这里没有资料支持 GPU 型号，所以 citations 应为 []。需要输出合法JSON。只输出JSON。",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791948920,
+    "id": "021791948917771aef91fec3a81c53339a5720099214cdee08493",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 269,
+      "prompt_tokens": 568,
+      "total_tokens": 837,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 257
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 269,
+    "prompt_tokens": 568,
+    "total_tokens": 837,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 257
+    }
+  },
+  "http_status": 200
+}

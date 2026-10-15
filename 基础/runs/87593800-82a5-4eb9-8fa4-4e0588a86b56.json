@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "87593800-82a5-4eb9-8fa4-4e0588a86b56",
+  "utc": "2026-10-14T03:35:20.633080+00:00",
+  "case_id": "D03",
+  "split": "dev",
+  "condition": "E",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "3a8c56bb7354a5e7d2b7f63be69a5d776c8cf9e8a6557688c9e2ba35e9834d43",
+  "original_passage_ids": [
+    "P695887",
+    "P419087"
+  ],
+  "selected_passage_ids": [
+    "P695887",
+    "P419087"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n规则：\n\n1. 只能使用用户提供的资料回答。\n2. 不允许使用外部知识补充。\n3. 如果资料不足以确定答案，answer 必须写“证据不足”。\n4. citations 只能填写真正支持答案的资料ID。\n5. 不要输出推理过程。\n6. 只输出合法JSON。\n\n格式必须严格为：\n\n{\"answer\":\"简短答案\",\"citations\":[\"P123456\"]}\n"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n\n白榆项目R5版本在2026-05单并发主测中，方案乙的完整响应耗时中位数比方案甲少多少秒？只输出数值。\n\n资料：\n\n[P695887] 白榆项目R5版本在2026-05的记录：单并发主测BY53以同一顺序处理40个问题，基础方案甲的客户端完整响应耗时中位数为7.6秒。 执行环境登记客户端运行时、接口模式与日志保留策略。连续请求按输入顺序保存，每次返回的使用量按服务字段原样写入；缺失字段保持空白。复核记录会链接到当时的输入摘要和结果文件，便于后来核算。 登记系统保存字段定义和计算口径；百分比的分子分母都能追到清单行。数据在导出前经过一次格式检查，但格式检查通过并不意味着引文语义正确。人员复核与机器状态同时留在记录中。 页面记录打开原文的位置、对应的资料快照和检查状态。引用位置存在时仍可能出现内容不支持的回答，所以核对员保存了主张文本和证据原句；这些字段可在审阅报告中逐项追溯。 每周核对本页行号、资料版本与签署记录。\n\n[P419087] 批次BY53的复核补页：BY53候选方案乙也处理相同40个问题，中位数为5.8秒；两组模型、输出上限和重试设置相同。 选择表由产品与质量人员共同签署，先检查资格条件，再比较剩余方案。若部分输入在第一次执行时失败，表格仍保留该行。后续的修复记录引用原行号，避免把测试后的改善写回初次结果。 本页还记录版本升级后的回滚入口、会话恢复尝试和文档区域映射状态。摘要用于快速浏览，正式决定仍依据签署规则及原始检查项。只有项目、版本、窗口、批次一致的记录才能放在一次决策中比较。 本组清单由两名核对员独立抽读，意见不一致的项目保留两份初判和仲裁日期。机器生成的建议只在旁列展示，正式签署使用可定位原文、计算口径和原始执行记录。 每周核对本页行号、资料版本与签署记录。\n\n请直接输出JSON答案。"
+    }
+  ],
+  "input_characters": 974,
+  "status": "ok",
+  "elapsed_seconds": 2.497768299999734,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"answer\":\"1.8\",\"citations\":[\"P695887\",\"P419087\"]}",
+          "reasoning_content": "我们需要回答用户问题。需要严格基于资料。问题：白榆项目R5版本在2026-05单并发主测中，方案乙的完整响应耗时中位数比方案甲少多少秒？只输出数值。资料 P695887 说方案甲中位数7.6秒。P419087 说方案乙中位数5.8秒。少多少 = 7.6 - 5.8 = 1.8秒。需要只输出数值？ 用户说“只输出数值。” 但系统要求输出合法JSON，格式 {\"answer\":\"简短答案\",\"citations\":[\"P123456\"]}。 answer 应为 \"1.8\" 或 \"1.8秒\"? 问题“少多少秒？只输出数值。” 格式要求 JSON，answer简短答案。可以 answer:\"1.8\"。citations 支持两个资料。需要只输出JSON，不输出推理。citations 只填真正支持答案的资料ID。两个都支持：P695887 甲，P419087 乙。合法性。最终JSON。",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791948923,
+    "id": "02179194892074808bad97b19aecd1d2e685dea670f3cae3f9321",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 246,
+      "prompt_tokens": 596,
+      "total_tokens": 842,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 225
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 246,
+    "prompt_tokens": 596,
+    "total_tokens": 842,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 225
+    }
+  },
+  "http_status": 200
+}

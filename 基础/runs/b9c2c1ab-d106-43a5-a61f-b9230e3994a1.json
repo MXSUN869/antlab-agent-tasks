@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "b9c2c1ab-d106-43a5-a61f-b9230e3994a1",
+  "utc": "2026-10-14T01:46:29.379089+00:00",
+  "case_id": "D01",
+  "split": "dev",
+  "condition": "E",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "884ea09c7fc5d8a1092ad9e60f286126f3e8e7751e023593b2070b16dd4cd709",
+  "original_passage_ids": [
+    "P312446",
+    "P898100"
+  ],
+  "selected_passage_ids": [
+    "P312446",
+    "P898100"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "\n你是一个严格基于证据的文档核验助手。\n\n你的任务不是猜测，而是核对资料是否真的支持问题。\n\n请遵守：\n\n1. 只能使用用户提供的资料回答。\n2. 禁止使用常识补充缺失信息。\n3. 回答前必须检查：\n   - 项目是否一致\n   - 版本是否一致\n   - 时间窗口是否一致\n   - 批次/实验条件是否一致\n   - 指标定义是否一致\n\n4. 如果两个数字来自不同批次、不同实验条件，\n   即使数字看起来可以计算，也不能直接比较。\n\n5. 如果资料不足以确定答案：\n   answer必须填写：\n   \"证据不足\"\n\n6. citations只能填写真正支持answer的资料ID。\n7. 不支持答案的资料不要引用。\n\n8. 只能输出严格JSON：\n\n{\n \"answer\":\"简短答案\",\n \"citations\":[\"Pxxxxxx\"]\n}\n\n不要输出任何解释文字。\n"
+    },
+    {
+      "role": "user",
+      "content": "\n问题：\n\n澄石项目R4版本在2026-03正式回归批次的核验率是多少？只输出百分数。\n\n\n资料：\n\n[P312446] 澄石项目R4版本在2026-03的记录：正式回归批次代号CS41，共收录85个有效问题；分母采用冻结后的有效问题数，格式错误也计入。 该记录保留批次编号、样本清单散列和负责人签名。复核者按固定输入重放，逐条保存原始响应、重试状态与引用位置；后续补录单列，不能覆盖第一次结果。耗时由客户端从提交请求计到读完响应，记录不含服务端排队拆分。 选择表由产品与质量人员共同签署，先检查资格条件，再比较剩余方案。若部分输入在第一次执行时失败，表格仍保留该行。后续的修复记录引用原行号，避免把测试后的改善写回初次结果。 导出目录按首次运行、人工核查和修订建议分层保存；检查员在当月月底核对清单哈希与签署页码。若同一问题多次出现，页面显示第一次结论及后续复核时间，不把第二次输出回填初始表。 每周核对本页行号、资料版本与签署记录。\n\n[P898100] 批次CS41的复核补页：CS41双人复核台账中，有68个问题的必要结论获所选文档完整支持，另有11个无支持结论、6个响应格式错误。 资料表还登记文档快照、问题清单、检索候选数与人工反馈。检查员把格式错误、拒答和引用错误分列，遇到版本切换时重新核对实际使用的文档标识。一个批次的中位数不用于推断另一批次的首字延迟。 来源栏包含资料页、采集日期和签署状态。页面只显示与本次请求快照相同的证据，引用可定位和内容得到支持分别记录。临时预热、正式批次、迁移批次采用各自的清单，数字之间不直接合并。 采集端分别记录请求发出时间、收到完整响应时间和错误类型；服务端内部阶段没有被观测。每条回归问题附资料版本和文档范围，合并报表时先检查这些字段，再计算计数与中位数。 每周核对本页行号、资料版本与签署记录。\n\n\n请按照证据核验流程回答。\n"
+    }
+  ],
+  "input_characters": 1179,
+  "status": "ok",
+  "elapsed_seconds": 8.73405230000003,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "length",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "",
+          "reasoning_content": "We need answer strict JSON. Need determine if evidence supports question: 澄石项目R4版本在2026-03正式回归批次的核验率是多少？只输出百分数。\n\nNeed inspect资料. P312446: 澄石项目R4版本在2026-03记录：正式回归批次代号CS41，共收录85个有效问题；分母采用冻结后的有效问题数，格式错误也计入。 It doesn't state 核验率? It gives total valid questions 85, denominator. P898100: 批次CS41复核补页：CS41双人复核台账中，有68个问题的必要结论获所选文档完整支持，另有11个无支持结论、6个响应格式错误。 This gives 68 supported, 11 unsupported, 6 format errors. Total 68+11+6=85. Is \"核验率\" defined? Maybe supported / total? But question asks \"核验率\" likely maybe \"必要结论获所选文档完整支持\" rate = 68/85 = 80.0%. Need verify if \"核验率\" matches. But instructions: 指标定义是否一致. The term \"核验率\" not directly in资料. P898100 mentions \"CS41双人复核台账中，有68个问题的必要结论获所选文档完整支持，另有11个无支持结论、6个响应格式错误。\" It doesn't call it 核验率. Could calculate support rate = 68/85=80%. But is that \"核验率\"? Could be if 核验率 = fully supported / total? Need be strict: If资料 not define 核验率, answer evidence insufficient? The prompt demands only output percentage if answer. The meta-instructions: if资料不足确定答案 answer=\"证据不足\". Need decide.\n\nQuestion: \"澄石项目R4版本在2026-03正式回归批次的核验率是多少？只输出百分数。\" We have project R4, 2026-03, formal regression batch CS41. P312446 says total 85 valid questions; denominator frozen valid, format errors included. P898100 says 68 supported, 11 unsupported, 6 format errors. If \"核验率\" means supported/valid? It might be 68/85 = 80%. But is there explicit \"核验率\"? No. The instruction says \"指标定义是否一致\". The term \"核验率\" may correspond to \"必要结论获所选文档完整支持\" proportion. But not labeled. Need maybe answer 80.00%? Let's not jump. Need consider all constraints.\n\nCould there be another calculation: \"核验率\" could be (68+11)/85? Because format errors? \"核验率\" maybe validation rate excluding format errors? Or \"支持率\"? The data has 68 supported, 11 no support, 6 response format errors. If核验率 = (supported + unsupported? all non-format errors?) / total? 79/85=92.94%. But no definition.\n\nP312446: \"分母采用冻结后的有效问题数，格式错误也计入.\" This hints denominator includes format errors. If computing \"核验率\" maybe numerator? It says 格式错误也计入 denominator, not numerator. P898100 provides categories. But no label \"核验率\". If user asks \"核验率\", maybe expected to compute (68 supported? or 68+11?)? Need infer from common term? Let's parse Chinese.\n\n\"核验率\" literally verification rate. In context, \"必要结论获所选文档完整支持\" maybe \"核验\" means verifying whether conclusion supported by selected docs. \"核验率\" could be proportion of questions whose necessary conclusions are fully supported by selected documents. That is 68/85=80%. \"无支持结论\" are not核验通过. \"响应格式错误\" also not? If denominator includes format errors, yes 68/85. P312446 explicitly says format errors included in denominator. So likely 80%.\n\nBut strict evidence: P898100 mentions \"CS41双人复核台账中，有68个问题的必要结论获所选文档完整支持\" This is a count, not rate. \"核验率\" not explicitly defined. We need decide if to answer 80.0% or 证据不足. The user says \"只输出百分数\" but system says if insufficient answer \"证据不足\". We can output JSON with answer \"证据不足\" or percentage. Need obey system. The question demands only percent? They say \"请按照证据核验流程回答。\" So JSON.\n\nWe need check if any资料 says \"核验率\". No. It only gives counts. But perhaps计算 is trivial: 核验率 = 68/85 = 80%. But need ensure \"核验率\" definition. The instructions: \"指标定义是否一致\" If no explicit definition,",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791942398,
+    "id": "02179194238968231c26a7cf9ea611aa30972127acb8017354389",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1024,
+      "prompt_tokens": 706,
+      "total_tokens": 1730,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1024
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 1024,
+    "prompt_tokens": 706,
+    "total_tokens": 1730,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1024
+    }
+  },
+  "http_status": 200
+}

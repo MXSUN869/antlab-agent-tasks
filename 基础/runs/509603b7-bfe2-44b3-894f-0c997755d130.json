@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "509603b7-bfe2-44b3-894f-0c997755d130",
+  "utc": "2026-10-09T13:30:51.567742+00:00",
+  "case_id": "D01",
+  "split": "dev",
+  "condition": "K",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "64efd33dedd11640cc78ef55fa9fa911905c7b0cf5a5143c4358c79f3b02f161",
+  "original_passage_ids": [
+    "P312446",
+    "P133261"
+  ],
+  "selected_passage_ids": [
+    "P312446",
+    "P133261"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n请遵守以下规则：\n1. 只能使用用户提供的资料回答，不能凭空补充事实。\n2. 如果资料不足以确定答案，answer 必须写“证据不足”。\n3. citations 只能填写真正支持答案的资料 ID。\n4. 输出必须是合法 JSON，不要输出 JSON 之外的内容。\n5. JSON 格式必须严格为：\n{\"answer\":\"简短答案\",\"citations\":[\"P...\"]}"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n澄石项目R4版本在2026-03正式回归批次的核验率是多少？只输出百分数。\n\n资料：\n[P312446] 澄石项目R4版本在2026-03的记录：正式回归批次代号CS41，共收录85个有效问题；分母采用冻结后的有效问题数，格式错误也计入。 该记录保留批次编号、样本清单散列和负责人签名。复核者按固定输入重放，逐条保存原始响应、重试状态与引用位置；后续补录单列，不能覆盖第一次结果。耗时由客户端从提交请求计到读完响应，记录不含服务端排队拆分。 选择表由产品与质量人员共同签署，先检查资格条件，再比较剩余方案。若部分输入在第一次执行时失败，表格仍保留该行。后续的修复记录引用原行号，避免把测试后的改善写回初次结果。 导出目录按首次运行、人工核查和修订建议分层保存；检查员在当月月底核对清单哈希与签署页码。若同一问题多次出现，页面显示第一次结论及后续复核时间，不把第二次输出回填初始表。 每周核对本页行号、资料版本与签署记录。\n\n[P133261] 澄石项目R4版本在2026-03的压力组使用八并发请求，96项返回成功、4项超时，P50为3.7秒；项目另列压力组汇总。 登记系统保存字段定义和计算口径；百分比的分子分母都能追到清单行。数据在导出前经过一次格式检查，但格式检查通过并不意味着引文语义正确。人员复核与机器状态同时留在记录中。 资料表还登记文档快照、问题清单、检索候选数与人工反馈。检查员把格式错误、拒答和引用错误分列，遇到版本切换时重新核对实际使用的文档标识。一个批次的中位数不用于推断另一批次的首字延迟。 同一资料在多个视图中使用时，系统保留共同文档编号和各自页面位置。跨页引用由原始片段与映射关系组成；页面预览属于呈现数据，不能替代经过复核的文本内容。 每周核对本页行号、资料版本与签署记录。\n\n请根据以上资料回答问题。"
+    }
+  ],
+  "input_characters": 980,
+  "status": "ok",
+  "elapsed_seconds": 3.4575279999990016,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"answer\":\"证据不足\",\"citations\":[]}",
+          "reasoning_content": "我们需要回答用户问题：澄石项目R4版本在2026-03正式回归批次的核验率是多少？只输出百分数。需要根据资料。资料P312446提到：正式回归批次代号CS41，共收录85个有效问题；分母采用冻结后的有效问题数，格式错误也计入。但没有明确核验率数值。P133261提到压力组八并发，96成功、4超时，P50 3.7秒；项目另列压力组汇总。没有核验率。问“核验率”可能资料中没给。需要判断是否证据不足。但用户要求只输出百分数。根据规则如果资料不足，answer必须写“证据不足”。但用户说只输出百分数，冲突。系统规则优先：如果不足以确定答案，answer写“证据不足”。输出JSON。需要citations只能填支持答案的资料ID。如果证据不足，citations可以空数组？规则说citations只能填写真正支持答案的资料ID。若证据不足，没有支持，可以[]。但格式要求 {\"answer\":\"简短答案\",\"citations\":[\"P...\"]}。可以 answer: \"证据不足\", citations: []。但用户要求只输出百分数。规则要求合法JSON，不能输出JSON之外。所以最终 JSON。\n\n需要确保不凭空计算。也许“核验率”可以从P312446？85个有效问题，但没给核验通过数/核验数。没有核验率。P133261有96成功、4超时，共100，成功率96%，但这不是正式回归批次核验率，是压力组。所以不能。回答证据不足。\n\ncitations可以[]，或者引用P312446说明没有核验率？但citations应支持答案。对于“证据不足”，没有资料支持。通常可以空。但格式要求citations数组可空。最终：{\"answer\":\"证据不足\",\"citations\":[]}。",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791552655,
+    "id": "021791552651776f7b571b3147c8053e664bd4ad440a2638d7123",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 417,
+      "prompt_tokens": 605,
+      "total_tokens": 1022,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 405
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 417,
+    "prompt_tokens": 605,
+    "total_tokens": 1022,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 405
+    }
+  },
+  "http_status": 200
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "744cdb83-755a-409a-974c-e44473c4505c",
+  "utc": "2026-10-10T02:24:56.343828+00:00",
+  "case_id": "T01",
+  "split": "evaluation",
+  "condition": "K",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "893e1e16e1343ec2f8742f5aaad960910f821304ed47ba4df11585d269510a36",
+  "original_passage_ids": [
+    "P555495",
+    "P130348"
+  ],
+  "selected_passage_ids": [
+    "P555495",
+    "P130348"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n请遵守以下规则：\n1. 只能使用用户提供的资料回答，不能凭空补充事实。\n2. 如果资料不足以确定答案，answer 必须写“证据不足”。\n3. citations 只能填写真正支持答案的资料 ID。\n4. 输出必须是合法 JSON，不要输出 JSON 之外的内容。\n5. JSON 格式必须严格为：\n{\"answer\":\"简短答案\",\"citations\":[\"P...\"]}"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n栖云项目R7版本在2026-02交付评审中确定的release_snapshot是什么？只输出快照编号。\n\n资料：\n[P555495] 栖云项目R7版本在2026-02的记录：交付评审QY71记录S23完成问答回归但缺坐标映射；S24完成问答、引用定位及冷启动恢复；S25的定位复核留三项未关闭问题。 来源栏包含资料页、采集日期和签署状态。页面只显示与本次请求快照相同的证据，引用可定位和内容得到支持分别记录。临时预热、正式批次、迁移批次采用各自的清单，数字之间不直接合并。 该记录保留批次编号、样本清单散列和负责人签名。复核者按固定输入重放，逐条保存原始响应、重试状态与引用位置；后续补录单列，不能覆盖第一次结果。耗时由客户端从提交请求计到读完响应，记录不含服务端排队拆分。 批次登记表标注生产、试运行与迁移三类用途；任务数量相似并不意味着能混用结果。每次替换模型或检索设置后，记录者保留旧配置散列，便于按真实执行版本重新计算。 每周核对本页行号、资料版本与签署记录。\n\n[P130348] 栖云项目R7版本在2026-02的迁移批次XQ54处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。 本页还记录版本升级后的回滚入口、会话恢复尝试和文档区域映射状态。摘要用于快速浏览，正式决定仍依据签署规则及原始检查项。只有项目、版本、窗口、批次一致的记录才能放在一次决策中比较。 执行环境登记客户端运行时、接口模式与日志保留策略。连续请求按输入顺序保存，每次返回的使用量按服务字段原样写入；缺失字段保持空白。复核记录会链接到当时的输入摘要和结果文件，便于后来核算。 质量复核表同时保存通过项、拒答项和异常项，避免只汇总有输出的请求。后续小范围修复可能改善其中一类错误，但只有原始输入和首次结果仍可访问，才方便判断改善来自哪里。 每周核对本页行号、资料版本与签署记录。\n\n请根据以上资料回答问题。"
+    }
+  ],
+  "input_characters": 1034,
+  "status": "ok",
+  "elapsed_seconds": 4.775259299999561,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"answer\":\"证据不足\",\"citations\":[]}",
+          "reasoning_content": "我们需要回答用户问题：栖云项目R7版本在2026-02交付评审中确定的release_snapshot是什么？只输出快照编号。需要严格基于资料。资料里有两个记录。问题问“交付评审中确定的release_snapshot”。资料P555495提到“栖云项目R7版本在2026-02的记录：交付评审QY71记录S23完成问答回归但缺坐标映射；S24完成问答、引用定位及冷启动恢复；S25的定位复核留三项未关闭问题。” 这里有S23, S24, S25，似乎不是明确release_snapshot。P130348提到“迁移批次XQ54...快照S19完成初步定位。” 也有S19。但问题问交付评审中确定的release_snapshot是什么？资料中没有明确“release_snapshot”或“确定的release_snapshot”。有“交付评审QY71记录S23... S24... S25...” 可能 release_snapshot 是 S? 但不确定。用户要求只输出快照编号，但系统要求JSON。需要判断是否证据不足。规则：如果资料不足以确定答案，answer 必须写“证据不足”。citations只能填真正支持答案的资料ID。这里无法确定 release_snapshot。应该输出 {\"answer\":\"证据不足\",\"citations\":[]} 或引用资料？如果证据不足，citations 可以为空。但也许可以根据 P555495 中交付评审QY71记录 S23/S24/S25? 问题问“确定的release_snapshot是什么？只输出快照编号。” 资料没有“release_snapshot”的字样，也没有明确“确定”的快照编号。P555495有交付评审记录，但 S23, S24, S25 是记录编号？ 说“交付评审QY71记录S23完成...；S24完成...；S25...”。这可能是快照编号？快照S23/S24/S25？但不确定哪一个被确定。P130348中“快照S19完成初步定位”。如果问交付评审中确定的release_snapshot，可能答案S24？因为S24完成问答、引用定位及冷启动恢复，看似最完整？但没有明确“确定”。不能凭空推断。所以证据不足。\n\n输出JSON，answer \"证据不足\"，citations 空？ 但规则说 citations 只能填写真正支持答案的资料 ID。如果证据不足，没有支持，可以空数组。合法JSON。不要输出其他内容。\n\n确保严格 JSON：{\"answer\":\"证据不足\",\"citations\":[]}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791599100,
+    "id": "021791599095947618be72f3907769bd1896ffa0351d57527029e",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 554,
+      "prompt_tokens": 628,
+      "total_tokens": 1182,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 542
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 554,
+    "prompt_tokens": 628,
+    "total_tokens": 1182,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 542
+    }
+  },
+  "http_status": 200
+}

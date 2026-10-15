@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "1f14eb56-c525-4162-8ec3-c4b2eb7a02ca",
+  "utc": "2026-10-14T03:45:50.043085+00:00",
+  "case_id": "T04",
+  "split": "evaluation",
+  "condition": "K",
+  "variant": "baseline",
+  "mode": "paid",
+  "config": {
+    "provider": "openai",
+    "endpoint": "<REMOVED_PER_SUBMISSION_REQUIREMENTS: see config.example.json>",
+    "model": "deepseek-v4-1-flash-260910",
+    "parameters": {
+      "temperature": 0,
+      "max_tokens": 1024
+    },
+    "timeout_seconds": 90
+  },
+  "data_sha256": "c37cda40ada89a18630dd7be098672f7e942e6f57e6199fe1aa2d6046e2b4961",
+  "dataset_version": "basic-context-v1.2",
+  "student_sha256": "3a8c56bb7354a5e7d2b7f63be69a5d776c8cf9e8a6557688c9e2ba35e9834d43",
+  "original_passage_ids": [
+    "P758661",
+    "P194167"
+  ],
+  "selected_passage_ids": [
+    "P758661",
+    "P194167"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个严格基于证据回答问题的问答助手。\n\n规则：\n\n1. 只能使用用户提供的资料回答。\n2. 不允许使用外部知识补充。\n3. 如果资料不足以确定答案，answer 必须写“证据不足”。\n4. citations 只能填写真正支持答案的资料ID。\n5. 不要输出推理过程。\n6. 只输出合法JSON。\n\n格式必须严格为：\n\n{\"answer\":\"简短答案\",\"citations\":[\"P123456\"]}\n"
+    },
+    {
+      "role": "user",
+      "content": "问题：\n\n按南枝项目R9版本2026-05核验表的选择规则，应选择哪条流程？只输出流程名称。\n\n资料：\n\n[P758661] 南枝项目R9版本在2026-05的记录：核验表NZ95记录流程甲召回17条证据、引入6条错误证据；流程乙召回16条、错误2条；流程丙召回19条、错误5条。 该记录保留批次编号、样本清单散列和负责人签名。复核者按固定输入重放，逐条保存原始响应、重试状态与引用位置；后续补录单列，不能覆盖第一次结果。耗时由客户端从提交请求计到读完响应，记录不含服务端排队拆分。 选择表由产品与质量人员共同签署，先检查资格条件，再比较剩余方案。若部分输入在第一次执行时失败，表格仍保留该行。后续的修复记录引用原行号，避免把测试后的改善写回初次结果。 导出目录按首次运行、人工核查和修订建议分层保存；检查员在当月月底核对清单哈希与签署页码。若同一问题多次出现，页面显示第一次结论及后续复核时间，不把第二次输出回填初始表。 每周核对本页行号、资料版本与签署记录。\n\n[P194167] 南枝项目R9版本在2026-05的迁移批次XQ57处理相近题目；该批次统计80项输入，64项得到支持，候选流程耗时为5.9秒，快照S19完成初步定位。 执行环境登记客户端运行时、接口模式与日志保留策略。连续请求按输入顺序保存，每次返回的使用量按服务字段原样写入；缺失字段保持空白。复核记录会链接到当时的输入摘要和结果文件，便于后来核算。 登记系统保存字段定义和计算口径；百分比的分子分母都能追到清单行。数据在导出前经过一次格式检查，但格式检查通过并不意味着引文语义正确。人员复核与机器状态同时留在记录中。 页面记录打开原文的位置、对应的资料快照和检查状态。引用位置存在时仍可能出现内容不支持的回答，所以核对员保存了主张文本和证据原句；这些字段可在审阅报告中逐项追溯。 每周核对本页行号、资料版本与签署记录。\n\n请直接输出JSON答案。"
+    }
+  ],
+  "input_characters": 1014,
+  "status": "ok",
+  "elapsed_seconds": 4.787497600000279,
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"answer\":\"证据不足\",\"citations\":[\"P758661\"]}",
+          "reasoning_content": "我们需要回答用户问题。必须只输出合法JSON，格式 {\"answer\":\"简短答案\",\"citations\":[\"P123456\"]}。需要严格基于资料。问题：按南枝项目R9版本2026-05核验表的选择规则，应选择哪条流程？只输出流程名称。资料有两个。需要确定选择规则和哪条流程。只输出流程名称作为answer。需要找核验表选择规则。P758661 南枝项目R9版本2026-05记录：核验表NZ95记录流程甲召回17条证据、引入6条错误证据；流程乙召回16条、错误2条；流程丙召回19条、错误5条。选择表由产品与质量人员共同签署，先检查资格条件，再比较剩余方案。但具体比较规则？资料未明确如何根据召回/错误选择流程，比如优先召回高还是错误低？需要判断是否证据不足。可能选择规则：先检查资格条件，再比较剩余方案。没有给标准。流程丙召回19最高但错误5；流程乙错误最低但召回16；甲召回17错误6。没有明确权衡，不能确定。因此 answer 应“证据不足”。但问题要求只输出流程名称。但规则要求如果资料不足以确定答案，answer必须写“证据不足”。citations 应该只能填支持“证据不足”的资料？也许可以列 P758661，因为它包含规则和指标但不足以确定。P194167 是迁移批次XQ57，相近题目，不是核验表NZ95选择规则？可能不相关。所以 citations 只填 P758661? 或者空？但格式需要citations。如果证据不足，citations 可填写提供信息但不足以确定的资料？要求“citations 只能填写真正支持答案的资料ID”。支持答案“证据不足”意味着资料存在但未说明选择规则。可填 P758661，因为它是唯一有关南枝R9 2026-05核验表选择规则和流程数据的资料。P194167 可能不相关，不应填。输出 JSON。确保没有多余。",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1791949554,
+    "id": "02179194955015908bad97b19aecd1d2e685dea670f3caebbf7b7",
+    "model": "deepseek-v4-1-flash-260910",
+    "service_tier": "default",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 457,
+      "prompt_tokens": 626,
+      "total_tokens": 1083,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 441
+      }
+    }
+  },
+  "usage": {
+    "completion_tokens": 457,
+    "prompt_tokens": 626,
+    "total_tokens": 1083,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 441
+    }
+  },
+  "http_status": 200
+}
