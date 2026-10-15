@@ -34,13 +34,16 @@
 
 ## 3. AI 工具与主要用途
 
-> **【需本人确认并补全】** 下面按仓库中可核验的痕迹填写。请补充/修正你实际使用的工具与范围，
-> 尤其是 ChatGPT 那一轮的具体用途。声明必须列全，否则第 4 项的「本人核验」无法成立。
-
 | 工具 | 用途 | 可核验痕迹 |
 |---|---|---|
-| ChatGPT | 【待确认】实现 `基础/starter/student.py` 的提示词与 `improve()` 排序逻辑；生成判分脚本初版；完成 40 次正式调用与结果整理；起草报告结构 | `基础/starter/student.py`、`基础/starter/score_runs.py`、`基础/results/report/report.md` |
+| ChatGPT | ① 分析题包骨架中**既有函数的结构与作用**，帮助理解运行链（`runner.py` 如何取数据与组织段落、`student.py` 的接口契约、`provider.py` 的调用与错误处理）；② 准备**可直接在终端运行的、用于检测实验结果的代码**；③ 编写部分代码 | 本人在本轮之前创建的脚本：`基础/starter/score_runs.py`（文件时间 2026-10-09 18:43）、`基础/starter/check_order.py`（2026-10-09 22:15）；实现项 `基础/starter/student.py`（末次改动 2026-10-14 11:31）；进阶 B 的样机改动 `进阶/challenge_b/my_engine.py`、`index.html`、`server.py` 与两份改前快照（2026-10-15 上午） |
 | DeepSeek Harness（AI 编码助手） | 本次续做：① 从原始日志重建 40 次主结果表并校验 messages 一致性（`starter/build_main_results.py`）；② R1/R2 判分初判与五组对照汇总（`starter/judge_and_summarize.py`）；③ 输出截断失败索引（`failure_index.md`）；④ 执行时段混淆诊断（`timing_confound_check.md`）；⑤ 端到端追溯脚本与记录（`starter/trace_one_request.py`、`request_trace_E1.md`）；⑥ 进阶 B 的缓存身份修正、回归/变体/边界整理与页面乱码修复；⑦ 题包逐文件 SHA256 完整性核查，并发现样机预埋故障曾被改动、回放验证后归位为题包原件（`进阶/runs/pack_integrity.md`）；⑧ 起草本声明、`decisions.md` 与整合报告；⑨ 提交安全清理（`tools/redact_endpoint.py`） | 见本仓库 git 提交记录与上述文件 |
+
+> **关于 ChatGPT 那一轮的记录**：完整对话记录**无法导出**——2026-10-15 网页端出现
+> "Model not found" 故障，部分地区的普通 IP 无法访问（同日有公开报道，OpenAI 状态页当日也
+> 列出多产品错误升高；该状态页正文未成功读取，故本文不引用其细节）。
+> 因此上表第 1 行据**本人回忆 + 仓库中可核验的文件时间与内容**填写，
+> 文件级归属以本人承认为准，不由工具调用日志佐证。
 
 **AI 没有被用于**：生成任何一次模型回答、编造任何一条引用、修改任何 `runs/` 下的原始日志、
 或改写 `draft`/输入数据以求通过。
